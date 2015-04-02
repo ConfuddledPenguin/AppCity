@@ -1,0 +1,43 @@
+@mixin menu-transition-keyframes($startLeft, $endLeft){
+
+@-webkit-keyframes menuslide{
+	0%{
+		left: $startLeft;
+	}
+
+	100%{
+		left: $endLeft;
+	}
+}
+
+@-moz-keyframes menuslide{
+	0%{
+		left: $startLeft;
+	}
+
+	100%{
+		left: $endLeft;
+	}
+}
+
+@-ms-keyframes menuslide{
+	0%{
+		left: $startLeft;
+	}
+
+	100%{
+		left: $endLeft;
+	}
+}
+
+@keyframes menuslide{
+	0%{
+		left: $startLeft;
+	}
+
+	100%{
+		left: $endLeft;
+	}
+}
+
+}

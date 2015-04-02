@@ -1,0 +1,39 @@
+/* 
+ * This is the style sheet for the ###COME UP WITH AWESOME NAME header
+ * 
+ * This stylesheet is written in sass and should be pre-processed to generate
+ * the css file on which the app relies.
+ */
+
+ header{
+ 	position:fixed;
+ 	left: 0;
+ 	top: 0;
+ 	width: 100%;
+	font-size: 1.5rem;
+	height: 2.1785rem;
+	background-color: $mainColor;
+	color: white;
+	padding: 0.5rem;
+	z-index: 100;
+	border-bottom: 1px solid black;
+
+	h1, #menu-icon{
+		float: left;
+	}
+	h1{
+		margin-left: 10%;
+		margin-top: 0.3125rem;
+	}
+
+	#menu-icon{
+		font-size: 2rem;
+		text-decoration: none;
+	}
+
+	#menu-icon:before{
+		font-family: icomoon;
+		color: white;
+		content: "\e9bd";
+	}
+}

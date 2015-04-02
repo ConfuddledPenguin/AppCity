@@ -1,0 +1,20 @@
+
+@include menu-transition-keyframes(-60%, 0%);
+
+#menu{
+	position: relative;
+	height: calc(100% - 3.25rem);
+	top: 3.25rem;
+	left: -60%;
+	overflow-y: auto;
+	width: 60%;
+	z-index: 10;
+	background-color: $mainColor;
+}
+
+.menu-visible{
+	-webkit-animation: menuslide 0.5s ease-out forwards;
+	-moz-animation: menuslide 0.5s ease-out forwards;
+	-ms-animation: menuslide 0.5s ease-out forwards;
+	animation: menuslide 0.5s ease-out forwards;
+}

@@ -1,0 +1,72 @@
+/* 
+ * This is the style sheet for the ###COME UP WITH AWESOME NAME app
+ * 
+ * This stylesheet is written in sass and should be pre-processed to generate
+ * the css file on which the app relies.
+ */
+
+/*******************************************************************************
+ * Global Vars
+ ******************************************************************************/
+
+  $backgroundColor: #000000;
+  $mainColor: red;
+  $highlightColor: blue;
+  $textColor: green;
+
+/* Using font icons from https://icomoon.io/
+ * 
+ * Licensed under CC 4.0
+ */
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot');
+	src:url('../fonts/icomoon.eot') format('embedded-opentype'),
+		url('../fonts/icomoon.woff') format('woff'),
+		url('../fonts/icomoon.ttf') format('truetype'),
+		url('../fonts/icomoon.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*******************************************************************************
+ * Global CSS
+ ******************************************************************************/
+
+html, body{
+	font-family: 'Roboto', sans-serif;
+	height: 100%;
+}
+
+#view{
+	position: absolute;
+	top:3.25rem;
+	width: 100%;
+	height: calc(100% - 3.25rem);
+	overflow-y: auto;
+}
+
+.clearfix:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.noDisplay {
+	display: none;
+}
+
+.icon:before{
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@import "_mixins.scss";
+
+/*******************************************************************************
+ * Imports
+ ******************************************************************************/
+
+@import "_header.scss";
+@import "_menu.scss";

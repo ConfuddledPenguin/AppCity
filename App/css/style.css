@@ -1,0 +1,119 @@
+/* 
+ * This is the style sheet for the ###COME UP WITH AWESOME NAME app
+ * 
+ * This stylesheet is written in sass and should be pre-processed to generate
+ * the css file on which the app relies.
+ */
+/*******************************************************************************
+ * Global Vars
+ ******************************************************************************/
+/* Using font icons from https://icomoon.io/
+ * 
+ * Licensed under CC 4.0
+ */
+@font-face {
+  font-family: 'icomoon';
+  src: url("../fonts/icomoon.eot");
+  src: url("../fonts/icomoon.eot") format("embedded-opentype"), url("../fonts/icomoon.woff") format("woff"), url("../fonts/icomoon.ttf") format("truetype"), url("../fonts/icomoon.svg") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+/*******************************************************************************
+ * Global CSS
+ ******************************************************************************/
+html, body {
+  font-family: 'Roboto', sans-serif;
+  height: 100%; }
+
+#view {
+  position: absolute;
+  top: 3.25rem;
+  width: 100%;
+  height: calc(100% - 3.25rem);
+  overflow-y: auto; }
+
+.clearfix:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both; }
+
+.noDisplay {
+  display: none; }
+
+.icon:before {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+/*******************************************************************************
+ * Imports
+ ******************************************************************************/
+/* 
+ * This is the style sheet for the ###COME UP WITH AWESOME NAME header
+ * 
+ * This stylesheet is written in sass and should be pre-processed to generate
+ * the css file on which the app relies.
+ */
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  font-size: 1.5rem;
+  height: 2.1785rem;
+  background-color: red;
+  color: white;
+  padding: 0.5rem;
+  z-index: 100;
+  border-bottom: 1px solid black; }
+  header h1, header #menu-icon {
+    float: left; }
+  header h1 {
+    margin-left: 10%;
+    margin-top: 0.3125rem; }
+  header #menu-icon {
+    font-size: 2rem;
+    text-decoration: none; }
+  header #menu-icon:before {
+    font-family: icomoon;
+    color: white;
+    content: "\e9bd"; }
+
+@-webkit-keyframes menuslide {
+  0% {
+    left: -60%; }
+
+  100% {
+    left: 0%; } }
+@-moz-keyframes menuslide {
+  0% {
+    left: -60%; }
+
+  100% {
+    left: 0%; } }
+@-ms-keyframes menuslide {
+  0% {
+    left: -60%; }
+
+  100% {
+    left: 0%; } }
+@keyframes menuslide {
+  0% {
+    left: -60%; }
+
+  100% {
+    left: 0%; } }
+#menu {
+  position: relative;
+  height: calc(100% - 3.25rem);
+  top: 3.25rem;
+  left: -60%;
+  overflow-y: auto;
+  width: 60%;
+  z-index: 10;
+  background-color: red; }
+
+.menu-visible {
+  -webkit-animation: menuslide 0.5s ease-out forwards;
+  -moz-animation: menuslide 0.5s ease-out forwards;
+  -ms-animation: menuslide 0.5s ease-out forwards;
+  animation: menuslide 0.5s ease-out forwards; }
