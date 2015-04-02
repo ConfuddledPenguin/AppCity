@@ -11,12 +11,11 @@ This was a project for the class CS317 at the university of Strathclyde. The cla
 Copyright 2014 
 
 
-Thomas Maxwell		-	gvb12182@uni.strath.ac.uk
+Thomas Maxwell	-	gvb12182@uni.strath.ac.uk
 
-Marcin Biolik 		- 
+Marcin Biolik   -
 
-David Clark			-
-
+David Clark			- qnb12183@uni.strath.ac.uk
 
 
 This project can not be copied and/or distributed without the express permission of the authors.
