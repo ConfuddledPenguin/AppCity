@@ -117,3 +117,32 @@ header {
   -moz-animation: menuslide 0.5s ease-out forwards;
   -ms-animation: menuslide 0.5s ease-out forwards;
   animation: menuslide 0.5s ease-out forwards; }
+
+.menu-item {
+  width: 100%;
+  color: white; }
+  .menu-item .menu-label {
+    color: white;
+    display: block;
+    width: 100%;
+    height: 2rem;
+    z-index: 100;
+    font-size: 1.5rem;
+    padding: 0.5rem 0 0.3rem 0;
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid black; }
+    .menu-item .menu-label span {
+      display: block;
+      padding: 0 0.8rem; }
+  .menu-item .content {
+    display: none; }
+  .menu-item .content-visible {
+    display: initial; }
+
+.menu-item:first-child .menu-label {
+  border-top: none; }
+
+.menu-item:last-child .menu-label {
+  height: 0;
+  padding: 0;
+  border-bottom: none; }
