@@ -13,10 +13,8 @@
 }
 
 .menu-visible{
-	-webkit-animation: menuslide 0.5s ease-out forwards;
-	-moz-animation: menuslide 0.5s ease-out forwards;
-	-ms-animation: menuslide 0.5s ease-out forwards;
-	animation: menuslide 0.5s ease-out forwards;
+	@include animation(menuslide, 0.5s, ease-out, forwards);
+	box-shadow: 2px 0 5px black;
 }
 
 .menu-item{
@@ -31,8 +29,8 @@
 		z-index: 100;
 		font-size: 1.5rem;
 		padding: 0.5rem 0 0.3rem 0;
-		border-top: 1px solid lighten(black, 10%);
-		border-bottom: 1px solid black;
+		border-top: 1px solid lighten($mainColor, 20%);
+		border-bottom: 1px solid darken($mainColor, 20%);
 
 		span{
 			display: block;

@@ -22,6 +22,10 @@
  ******************************************************************************/
 html, body {
   font-family: 'Roboto', sans-serif;
+  height: 100%;
+  background: black; }
+
+section {
   height: 100%; }
 
 #view {
@@ -29,7 +33,9 @@ html, body {
   top: 3.25rem;
   width: 100%;
   height: calc(100% - 3.25rem);
-  overflow-y: auto; }
+  overflow-y: auto;
+  background: white;
+  opacity: inherit; }
 
 .clearfix:after {
   content: " ";
@@ -40,9 +46,42 @@ html, body {
 .noDisplay {
   display: none; }
 
+a {
+  text-decoration: none; }
+
 .icon:before {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
+
+@-webkit-keyframes mainfade {
+  0% {
+    opacity: 1; }
+
+  100% {
+    opacity: 0.9; } }
+@-moz-keyframes mainfade {
+  0% {
+    opacity: 1; }
+
+  100% {
+    opacity: 0.9; } }
+@-ms-keyframes mainfade {
+  0% {
+    opacity: 1; }
+
+  100% {
+    opacity: 0.9; } }
+@keyframes mainfade {
+  0% {
+    opacity: 1; }
+
+  100% {
+    opacity: 0.9; } }
+.fade-out {
+  -webkit-animation: mainfade 0.5s ease forwards;
+  -moz-animation: mainfade 0.5s ease forwards;
+  -ms-animation: mainfade 0.5s ease forwards;
+  animation: mainfade 0.5s ease forwards; }
 
 /*******************************************************************************
  * Imports
@@ -64,7 +103,7 @@ header {
   color: white;
   padding: 0.5rem;
   z-index: 100;
-  border-bottom: 1px solid black; }
+  border-bottom: 1px solid #990000; }
   header h1, header #menu-icon {
     float: left; }
   header h1 {
@@ -116,7 +155,8 @@ header {
   -webkit-animation: menuslide 0.5s ease-out forwards;
   -moz-animation: menuslide 0.5s ease-out forwards;
   -ms-animation: menuslide 0.5s ease-out forwards;
-  animation: menuslide 0.5s ease-out forwards; }
+  animation: menuslide 0.5s ease-out forwards;
+  box-shadow: 2px 0 5px black; }
 
 .menu-item {
   width: 100%;
@@ -129,8 +169,8 @@ header {
     z-index: 100;
     font-size: 1.5rem;
     padding: 0.5rem 0 0.3rem 0;
-    border-top: 1px solid #1a1a1a;
-    border-bottom: 1px solid black; }
+    border-top: 1px solid #ff6666;
+    border-bottom: 1px solid #990000; }
     .menu-item .menu-label span {
       display: block;
       padding: 0 0.8rem; }

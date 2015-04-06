@@ -1,43 +1,92 @@
 @mixin menu-transition-keyframes($startLeft, $endLeft){
 
-@-webkit-keyframes menuslide{
-	0%{
-		left: $startLeft;
+	@-webkit-keyframes menuslide{
+		0%{
+			left: $startLeft;
+		}
+
+		100%{
+			left: $endLeft;
+		}
 	}
 
-	100%{
-		left: $endLeft;
+	@-moz-keyframes menuslide{
+		0%{
+			left: $startLeft;
+		}
+
+		100%{
+			left: $endLeft;
+		}
+	}
+
+	@-ms-keyframes menuslide{
+		0%{
+			left: $startLeft;
+		}
+
+		100%{
+			left: $endLeft;
+		}
+	}
+
+	@keyframes menuslide{
+		0%{
+			left: $startLeft;
+		}
+
+		100%{
+			left: $endLeft;
+		}
 	}
 }
 
-@-moz-keyframes menuslide{
-	0%{
-		left: $startLeft;
+@mixin main-fade-keyframes($start, $end){
+
+	@-webkit-keyframes mainfade{
+		0%{
+			opacity: $start;
+		}
+
+		100%{
+			opacity: $end;
+		}
 	}
 
-	100%{
-		left: $endLeft;
+	@-moz-keyframes mainfade{
+		0%{
+			opacity: $start;
+		}
+
+		100%{
+			opacity: $end;
+		}
+	}
+
+	@-ms-keyframes mainfade{
+		0%{
+			opacity: $start;
+		}
+
+		100%{
+			opacity: $end;
+		}
+	}
+
+	@keyframes mainfade{
+		0%{
+			opacity: $start;
+		}
+
+		100%{
+			opacity: $end;
+		}
 	}
 }
 
-@-ms-keyframes menuslide{
-	0%{
-		left: $startLeft;
-	}
-
-	100%{
-		left: $endLeft;
-	}
-}
-
-@keyframes menuslide{
-	0%{
-		left: $startLeft;
-	}
-
-	100%{
-		left: $endLeft;
-	}
-}
-
+@mixin animation($name, $time, $type, $direction){
+	-webkit-animation: $name $time $type $direction;
+	-moz-animation: $name $time $type $direction;
+	-ms-animation: $name $time $type $direction;
+	animation: $name $time $type $direction;
 }

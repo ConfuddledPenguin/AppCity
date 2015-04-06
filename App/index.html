@@ -8,24 +8,50 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,900,700,500' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/style.css">
-	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
 	<header>
 		<a id="menu-icon" class="icon" href="#"><span></span></a>
-		<h1>###SECTION TITLE</h1>
+		<h1 id="headerTitle">###SECTION TITLE</h1>
 	</header>
-	<section id="menu">
+	<nav id="menu" class="menu-start">
 		<div class="menu-item">
-			<a href="#" class="menu-label"><span>User<span></a>
+			<a href="#" class="menu-label"><span id="menu-Explore">Explore</span></a>
 		</div>
-		<div class="menu-item">
-			<a href="#" class="menu-label"><span>Settings<span></a>
+		<div class="menu-item" >
+			<a href="#" class="menu-label"><span id="menu-Guides">Guides</span></a>
 		</div>
-	</section>
-	<section id="view">
-		<p></p>
-	</section>
+		<div class="menu-item" >
+			<a href="#" class="menu-label"><span id="menu-User">#Username</span></a>
+		</div>
+		<div class="menu-item" >
+			<a href="#" class="menu-label"><span id="menu-Settings">Settings</span></a>
+		</div>
+		<div class="menu-item" >
+			<a href="#" class="menu-label"><span id="menu-About">About</span></a>
+		</div>
+		<div class="menu-item" >
+			<a href="#" class="menu-label"></a>
+		</div>
+	</nav>
+	<main id="view">
+		<section id="explore">
+			<p>A map goes here</p>
+		</section>
+		<section id="guides" class="noDisplay">
+			<p>Guides go here</p>
+		</section>
+		<section id="user" class="noDisplay">
+			<p>User info goes here</p>
+		</section>
+		<section id="settings" class="noDisplay">
+			<p>Settings go here</p>
+		</section>
+		<section id="about" class="noDisplay">
+			<h2></h2>
+		</section>
+	</main>
 </body>
-<script src="js/viewCode.js"></script>
+<script src="js/ViewCode.js"></script>
 </html>
