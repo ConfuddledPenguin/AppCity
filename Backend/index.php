@@ -11,7 +11,7 @@
 		function clicked(){
 
 			$.ajax({
-				url: 'https://devweb2014.cis.strath.ac.uk/~gvb12182/CS317/AppCity/api/v1/banana',
+				url: 'https://devweb2014.cis.strath.ac.uk/~gvb12182/CS317/AppCity/api/v1/banana?fish=true',
 				type: 'GET',
 			})
 			.done(function(data) {
@@ -28,9 +28,9 @@
 		function createUser(){
 
 			$.ajax({
-				url: 'https://devweb2014.cis.strath.ac.uk/~gvb12182/CS317/AppCity/api/v1/User',
+				url: 'https://devweb2014.cis.strath.ac.uk/~gvb12182/CS317/AppCity/api/v1/User?request=createUser',
 				type: 'POST',
-				data: {Username: "APITEST", password: "bobisawesome"},
+				data: {username: "APITEST", phrase: "bobisawesome"},
 			})
 			.done(function(data) {
 				$(".createUserDisplay").html(JSON.stringify(data));

@@ -35,9 +35,17 @@ class API{
 				break;
 			
 			default:
+
+				$fish = false;
+
+				if(array_key_exists('fish', $_GET)){
+					$fish = $_GET['fish'];
+				}
+
 				$data = [
-				"Message" => "No matching call have your data back",
+				"Message" => "404 No matching call have your data back",
 				"request" => $this->request,
+				"banana url arg" => $fish,
 				"method" => $this->method,
 				];
 
