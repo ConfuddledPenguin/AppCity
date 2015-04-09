@@ -23,11 +23,27 @@ $("#menu-Explore").click(function(event) {
 	menutoggle();
 });
 
+$("#menu-Places").click(function(event) {
+	currentView.addClass('noDisplay');
+	$("#places").removeClass('noDisplay');
+	currentView = $("#places");
+	$("#headerTitle").text("Places");
+	menutoggle();
+});
+
 $("#menu-Guides").click(function(event) {
 	currentView.addClass('noDisplay');
 	$("#guides").removeClass('noDisplay');
 	currentView = $("#guides");
 	$("#headerTitle").text("Guides");
+	menutoggle();
+});
+
+$("#menu-Events").click(function(event) {
+	currentView.addClass('noDisplay');
+	$("#events").removeClass('noDisplay');
+	currentView = $("#events");
+	$("#headerTitle").text("Events");
 	menutoggle();
 });
 

@@ -172,7 +172,9 @@ header {
     border-top: 1px solid #ff6666;
     border-bottom: 1px solid #990000; }
     .menu-item .menu-label span {
-      display: block;
+      float: left;
+      display: block; }
+    .menu-item .menu-label span:first-of-type {
       padding: 0 0.8rem; }
   .menu-item .content {
     display: none; }
@@ -186,3 +188,66 @@ header {
   height: 0;
   padding: 0;
   border-bottom: none; }
+
+#menu-Explore-Icon {
+  font-size: 1.5rem;
+  text-decoration: none; }
+
+#menu-Explore-Icon:before {
+  font-family: icomoon;
+  color: white;
+  content: "\e94c"; }
+
+#menu-Places-Icon {
+  font-size: 1.5rem;
+  text-decoration: none; }
+
+#menu-Places-Icon:before {
+  font-family: icomoon;
+  color: white;
+  content: "\e947"; }
+
+#menu-Guides-Icon {
+  font-size: 1.5rem;
+  text-decoration: none; }
+
+#menu-Guides-Icon:before {
+  font-family: icomoon;
+  color: white;
+  content: "\e91f"; }
+
+#menu-Events-Icon {
+  font-size: 1.5rem;
+  text-decoration: none; }
+
+#menu-Events-Icon:before {
+  font-family: icomoon;
+  color: white;
+  content: "\e953"; }
+
+#menu-User-Icon {
+  font-size: 1.5rem;
+  text-decoration: none; }
+
+#menu-User-Icon:before {
+  font-family: icomoon;
+  color: white;
+  content: "\e971"; }
+
+#menu-Settings-Icon {
+  font-size: 1.5rem;
+  text-decoration: none; }
+
+#menu-Settings-Icon:before {
+  font-family: icomoon;
+  color: white;
+  content: "\e994"; }
+
+#menu-About-Icon {
+  font-size: 1.5rem;
+  text-decoration: none; }
+
+#menu-About-Icon:before {
+  font-family: icomoon;
+  color: white;
+  content: "\e926"; }
