@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6Gc0XW1xBwcIXwnRC3EZt2gP8_yrHwF0"></script>
 </head>
 <body>
 	<header class="clearfix">
@@ -64,7 +65,7 @@
 	</nav>
 	<main id="view">
 		<section id="explore">
-			<p>A map goes here</p>
+			<p><div style="height: 100%;" id="map-canvas"></div></p>
 		</section>
 		<section id="places" class="noDisplay">
 			<p>Places go here</p>
@@ -119,4 +120,5 @@
 	</main>
 </body>
 <script src="js/ViewCode.js"></script>
+<script src="js/MapCode.js"></script>
 </html>
