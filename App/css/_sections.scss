@@ -1,0 +1,18 @@
+.container{
+	padding: 0.8rem;
+	background: #e5e5e5;
+}
+
+.box{
+	margin-bottom: 1rem;
+	padding: 0.5rem;
+	background: white;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+
+	h2{
+		font-size: 1.4rem;
+		padding-bottom: 0.4rem;
+	}
+}

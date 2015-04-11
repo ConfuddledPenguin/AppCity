@@ -1,0 +1,31 @@
+/* 
+ * This is the style sheet for the ###COME UP WITH AWESOME NAME header
+ * 
+ * This stylesheet is written in sass and should be pre-processed to generate
+ * the css file on which the app relies.
+ *
+ * This is the style for the login section
+ */
+
+ #login{
+
+	input, button{
+		display: block;
+		height: 2rem;
+		font-size: 1.3rem;
+		width: 80%;
+		margin: 1rem auto;
+	}
+
+	input {
+		border: 1px solid #7b7b7b;
+	}
+
+	button{
+		outline: none;
+		border: none;
+		color: white;
+		background: $mainColor;
+	}
+
+ }

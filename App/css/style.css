@@ -23,10 +23,11 @@
 html, body {
   font-family: 'Roboto', sans-serif;
   height: 100%;
-  background: black; }
+  background-color: #E5E5E5; }
 
 section {
-  height: 100%; }
+  height: 100%;
+  background: #E5E5E5; }
 
 #view {
   position: absolute;
@@ -34,7 +35,7 @@ section {
   width: 100%;
   height: calc(100% - 3.25rem);
   overflow-y: auto;
-  background: white;
+  background-color: #E5E5E5;
   opacity: inherit; }
 
 .clearfix:after {
@@ -49,6 +50,9 @@ section {
 a {
   text-decoration: none; }
 
+p {
+  line-height: 1.4; }
+
 .icon:before {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -58,25 +62,25 @@ a {
     opacity: 1; }
 
   100% {
-    opacity: 0.9; } }
+    opacity: 0.8; } }
 @-moz-keyframes mainfade {
   0% {
     opacity: 1; }
 
   100% {
-    opacity: 0.9; } }
+    opacity: 0.8; } }
 @-ms-keyframes mainfade {
   0% {
     opacity: 1; }
 
   100% {
-    opacity: 0.9; } }
+    opacity: 0.8; } }
 @keyframes mainfade {
   0% {
     opacity: 1; }
 
   100% {
-    opacity: 0.9; } }
+    opacity: 0.8; } }
 .fade-out {
   -webkit-animation: mainfade 0.5s ease forwards;
   -moz-animation: mainfade 0.5s ease forwards;
@@ -190,7 +194,8 @@ header {
   border-bottom: none; }
 
 #menu-Explore-Icon {
-  font-size: 1.5rem;
+  padding-top: 0.1rem;
+  font-size: 1.3rem;
   text-decoration: none; }
 
 #menu-Explore-Icon:before {
@@ -199,7 +204,8 @@ header {
   content: "\e94c"; }
 
 #menu-Places-Icon {
-  font-size: 1.5rem;
+  padding-top: 0.1rem;
+  font-size: 1.3rem;
   text-decoration: none; }
 
 #menu-Places-Icon:before {
@@ -208,7 +214,8 @@ header {
   content: "\e947"; }
 
 #menu-Guides-Icon {
-  font-size: 1.5rem;
+  padding-top: 0.1rem;
+  font-size: 1.3rem;
   text-decoration: none; }
 
 #menu-Guides-Icon:before {
@@ -217,7 +224,8 @@ header {
   content: "\e91f"; }
 
 #menu-Events-Icon {
-  font-size: 1.5rem;
+  padding-top: 0.1rem;
+  font-size: 1.3rem;
   text-decoration: none; }
 
 #menu-Events-Icon:before {
@@ -226,7 +234,8 @@ header {
   content: "\e953"; }
 
 #menu-User-Icon {
-  font-size: 1.5rem;
+  padding-top: 0.1rem;
+  font-size: 1.3rem;
   text-decoration: none; }
 
 #menu-User-Icon:before {
@@ -235,7 +244,8 @@ header {
   content: "\e971"; }
 
 #menu-Settings-Icon {
-  font-size: 1.5rem;
+  padding-top: 0.1rem;
+  font-size: 1.3rem;
   text-decoration: none; }
 
 #menu-Settings-Icon:before {
@@ -244,10 +254,80 @@ header {
   content: "\e994"; }
 
 #menu-About-Icon {
-  font-size: 1.5rem;
+  padding-top: 0.1rem;
+  font-size: 1.3rem;
   text-decoration: none; }
 
 #menu-About-Icon:before {
   font-family: icomoon;
   color: white;
   content: "\e926"; }
+
+.container {
+  padding: 0.8rem;
+  background: #e5e5e5; }
+
+.box {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: white;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  .box h2 {
+    font-size: 1.4rem;
+    padding-bottom: 0.4rem; }
+
+/* 
+ * This is the style sheet for the ###COME UP WITH AWESOME NAME header
+ * 
+ * This stylesheet is written in sass and should be pre-processed to generate
+ * the css file on which the app relies.
+ *
+ * This is the style for the login section
+ */
+#login input, #login button {
+  display: block;
+  height: 2rem;
+  font-size: 1.3rem;
+  width: 80%;
+  margin: 1rem auto; }
+#login input {
+  border: 1px solid #7b7b7b; }
+#login button {
+  outline: none;
+  border: none;
+  color: white;
+  background: red; }
+
+/* 
+ * This is the style sheet for the ###COME UP WITH AWESOME NAME header
+ * 
+ * This stylesheet is written in sass and should be pre-processed to generate
+ * the css file on which the app relies.
+ *
+ * This is the style for the about section
+ */
+#about a {
+  color: #333; }
+#about .creatorInfo {
+  display: block;
+  margin-top: 0.8rem; }
+#about .email, #about .linkedin, #about .github {
+  display: block;
+  margin: 0.4rem 0 0 1rem; }
+#about .email:before {
+  font-family: icomoon;
+  color: black;
+  content: "\e945";
+  padding-right: 0.5rem; }
+#about .github:before {
+  font-family: icomoon;
+  color: black;
+  content: "\eab1";
+  padding-right: 0.5rem; }
+#about .linkedin:before {
+  font-family: icomoon;
+  color: black;
+  content: "\eac9";
+  padding-right: 0.5rem; }

@@ -1,3 +1,8 @@
+
+/* 
+ * Menu Control
+ */
+
 var menuVisible = false;
 var currentView = $("#explore");
 
@@ -49,9 +54,9 @@ $("#menu-Events").click(function(event) {
 
 $("#menu-User").click(function(event) {
 	currentView.addClass('noDisplay');
-	$("#user").removeClass('noDisplay');
-	currentView = $("#user");
-	$("#headerTitle").text("#UserName");
+	$("#login").removeClass('noDisplay');
+	currentView = $("#login");
+	$("#headerTitle").text("Log In");
 	menutoggle();
 });
 
@@ -70,4 +75,16 @@ $("#menu-About").click(function(event) {
 	$("#headerTitle").text("About");
 	menutoggle();
 });
+
+/*
+ * Email injection
+ */
+
+$("#tomemail").text("hello@tom-maxwell.com");
+$("#tomemail").attr("href","mailto:hello@tom-maxwell.com");
+
+/*
+ * User Control
+ */
+
 

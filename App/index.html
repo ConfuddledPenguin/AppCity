@@ -11,11 +11,11 @@
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
-	<header>
+	<header class="clearfix">
 		<a id="menu-icon" class="icon" href="#"><span></span></a>
-		<h1 id="headerTitle">###SECTION TITLE</h1>
+		<h1 id="headerTitle">Explore</h1>
 	</header>
-	<nav id="menu" class="menu-start">
+	<nav id="menu" class="menu-start clearfix">
 		<div class="menu-item">
 			<a href="#" class="menu-label">
 				<span id="menu-Explore-Icon" class="icon"></span>
@@ -75,14 +75,46 @@
 		<section id="events" class="noDisplay">
 			<p>Events go here</p>
 		</section>
+		<section id="login" class="noDisplay">
+			<div class="container">
+				<input type="text" name="username" text="Username">
+				<input type="text" name="password" text="phrase">
+				<button type="submit" name="Log In">Log In</button>
+				<button type="register" name="register">Register</button>
+			</div>
+		</section>
 		<section id="user" class="noDisplay">
-			<p>User info goes here</p>
+			<p>user stuff</p>
 		</section>
 		<section id="settings" class="noDisplay">
 			<p>Settings go here</p>
 		</section>
 		<section id="about" class="noDisplay">
-			<p>About goes here</p>
+			<div class="container">
+				<div id="info" class="box">
+					<h2>Info</h2>
+					<p>Created for the class CS317 at the University of Strathclyde, Glasgow. The class focuses on mobile development and the issues it creates in terms of user interaction. It is more about the design rather than development, hence the web app.</p>
+				</div>
+				<div id="codeOnGitHub" class="box">
+					<h2>The source</h2>
+					<p>View the source of this app and the API that services it on <a href="https://github.com/ConfuddledPenguin/AppCity">GitHub</a></p>
+				</div>
+				<div id="createdBy" class="box">
+					<h2>Created By</h2>
+					<ul>
+						<li class="creatorInfo">
+							<a href="http://tom-maxwell.com">Thomas Maxwell</a>
+							<ul>
+								<li><a class="email" id="tomemail" href='email'>email</a></li>
+								<li><a class="github" href="https://github.com/ConfuddledPenguin">GitHub</a></li>
+						<li><a class="linkedin" href="https://www.linkedin.com/pub/thomas-maxwell/83/a43/709">LinkedIn</a></li>
+							</ul>
+						</li>
+						<li class="creatorInfo">David Clark</li>
+						<li class="creatorInfo">Marcin Biolik</li>
+					</ul>
+				</div>
+			</div>
 		</section>
 	</main>
 </body>

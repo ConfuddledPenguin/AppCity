@@ -38,11 +38,12 @@ $textColor: green;
 html, body{
 	font-family: 'Roboto', sans-serif;
 	height: 100%;
-	background: black;
+	background-color: #E5E5E5;
 }
 
 section{
 	height: 100%;
+	background: #E5E5E5;
 }
 
 #view{
@@ -51,7 +52,7 @@ section{
 	width: 100%;
 	height: calc(100% - 3.25rem);
 	overflow-y: auto;
-	background: white;
+	background-color: #E5E5E5;
 	opacity: inherit;
 }
 
@@ -70,12 +71,16 @@ a{
 	text-decoration: none;
 }
 
+p{
+	line-height: 1.4;
+}
+
 .icon:before{
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-@include main-fade-keyframes(1, 0.9);
+@include main-fade-keyframes(1, 0.8);
 .fade-out{
 	@include animation(mainfade, 0.5s, ease, forwards);
 }
@@ -86,3 +91,6 @@ a{
 
 @import "_header.scss";
 @import "_menu.scss";
+@import "_sections.scss";
+@import "_login.scss";
+@import "_about.scss";
