@@ -286,19 +286,35 @@ header {
  *
  * This is the style for the login section
  */
+#login .container {
+  background-size: cover;
+  background-position: top center;
+  height: calc(100% - 1.6rem); }
+#login #loginbox {
+  position: relative;
+  top: 14rem; }
 #login input, #login button {
   display: block;
   height: 2rem;
   font-size: 1.3rem;
   width: 80%;
-  margin: 1rem auto; }
+  margin: 1rem auto;
+  outline: none; }
 #login input {
   border: 1px solid #7b7b7b; }
+#login input:focus {
+  box-shadow: 0 0 1px black; }
 #login button {
-  outline: none;
   border: none;
   color: white;
-  background: red; }
+  background: red;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -ms-transition-duration: 0.5s;
+  transition-duration: 0.5s; }
+#login button:hover {
+  background: #cc0000;
+  box-shadow: 2px 0 5px red; }
 
 /* 
  * This is the style sheet for the ###COME UP WITH AWESOME NAME header

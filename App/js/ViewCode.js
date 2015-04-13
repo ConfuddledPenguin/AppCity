@@ -1,4 +1,8 @@
 
+/*
+ * This block of js handles general ui events.
+ */
+
 /* 
  * Menu Control
  */
@@ -87,4 +91,26 @@ $("#tomemail").attr("href","mailto:hello@tom-maxwell.com");
  * User Control
  */
 
+/*
+ * Log in
+ */
 
+//get a background image
+if(navigator.geolocation) {
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+
+    var width = $("#login").width();
+    var height = $("#login").height();
+ 	var url = "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude + "&zoom=13&size=" + width + "x" + height;
+
+ 	var css = "url('"+ url +"')";
+
+	$("#login").children('.container').css('background-image', css);
+
+    });
+}
+
+$(".loginInput").focus(function(event) {
+	$('#loginbox').css('top', '0.5rem');
+});

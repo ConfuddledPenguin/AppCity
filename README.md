@@ -8,6 +8,14 @@ This was a project for the class CS317 at the university of Strathclyde. The cla
 We have decided to create an app that encourages users to share events and places in their local community involving them in the community and getting them learning about and exploring there local area. Of course this can also be used when away from the users local area, as a crowd sourced tourist guide. 
 
 
+###Tools and Frameworks###
+
+CSS written in [sass](http://sass-lang.com/).
+
+[JQuery](http://jquery.com/) heavily used and loved.
+
+DataBase connections handled by [edrackham's](http://edrackham.com/) handy [class](https://github.com/a1phanumeric/PHP-MySQL-Class).
+
 ###Set Up###
 
 There are three main folders in this project.

@@ -1,3 +1,4 @@
+USE gvb12182;
 CREATE TABLE Users (
   Username varchar(255) NOT NULL, 
   password varchar(255) NOT NULL, 
@@ -20,11 +21,11 @@ CREATE TABLE User_Stats (
 CREATE TABLE Places (
   ID         int(10) NOT NULL AUTO_INCREMENT, 
   Name       varchar(255) NOT NULL, 
-  Short_des  tinyint(1) NOT NULL, 
+  Short_des  blob NOT NULL, 
   Long_des   blob, 
   Av_Rating  int(10), 
-  Lat        int(10) NOT NULL, 
-  Long       int(10) NOT NULL, 
+  Lat_coord  int(10) NOT NULL, 
+  Long_coord int(10) NOT NULL, 
   Address    int(10), 
   Place_Type int(10), 
   Image      int(10), 
@@ -34,6 +35,7 @@ CREATE TABLE Places (
 );
 CREATE TABLE Tokens (
   Auth_token varchar(255) NOT NULL, 
-  Username   varchar(255) NOT NULL, 
+  Username   varchar(255) NOT NULL,
+  Expires    bigint NOT NULL, 
   PRIMARY KEY (Auth_token)
 );

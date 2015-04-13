@@ -15,6 +15,35 @@ class UserAPI{
 		}
 	}
 
+	public function loggedincheck(auth){
+
+		include_once("sqlHandler/dbconnector.php");
+		$result = $DB->fetch("SELECT * FROM Tokens WHERE Username =?", array($username));
+
+		if($result === false){
+			$return = [
+					"error" => false,
+					"loggedin" => false,
+					"reply" => "Unkown Token",
+				];
+
+			return json_encode($return);
+		}else{
+
+			if($result["expiry"] < time()){
+				return true;
+			}else{
+				$return = [
+					"error" => false,
+					"loggedin" => false,
+					"reply" => "Expired token",
+				];
+
+			return json_encode($return);
+			}
+		}
+	}
+
 	public function process(){
 
 		switch ($this->method) {
@@ -43,7 +72,7 @@ class UserAPI{
 		//check if user is logged in
 		//before allowing any other actions
 		@require_once 'functions.php';
-		loggedincheck($username, $auth);
+		loggedincheck($auth);
 
 		//other actions
 
@@ -56,7 +85,39 @@ class UserAPI{
 	}
 
 	private function processGET(){
-		return json_encode("User API reached via get");
+
+		//request for user info
+		if($this->request === "getUserInfo"){
+			return $this->getUserInfo();
+		}
+
+		//other actions
+
+		//and if here we don't know what they want
+		$return = [
+				"error" => true,
+				"errorMessage" => "Request unknown",
+			];
+		return json_encode($return);
+	}
+
+	private function getUserInfo(){
+
+		if(array_key_exists("username", $_GET)){
+				$username = $_GET["username"];
+		}else{
+			$return = [
+				"error" => true,
+				"errorMessage" => "Username required as a parameter",
+			];
+
+			return json_encode($result);
+		}
+
+		include_once("sqlHandler/dbconnector.php");
+		$result = $DB->fetch("SELECT * FROM User_Stats WHERE Username =?", array($username));
+
+		return json_encode($result);
 	}
 
 	/*
@@ -93,15 +154,19 @@ class UserAPI{
 		}
 
 		//check user is valid
-		//	Get password hash for username from db
+		include_once("sqlHandler/dbconnector.php");
+		$result = $DB->fetch("SELECT password FROM Users WHERE Username =?", array($username));
 
-		$hash = "";
+		$hash = $result["password"];
 
 		if(password_verify($password, $hash)){
 
 			//generate auth token
 			//need to store this along with a date of expiry
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
+			$expireTime = time() + (4 * 7 * 24 * 60 * 60); // expires in 4 weeks
+
+			$DB->execute("INSERT INTO Tokens VALUES (?,?,?)", array($token, $username, $expireTime));
 
 			$return = [
 					"error" => false,
@@ -130,6 +195,14 @@ class UserAPI{
 
 		if(array_key_exists("username", $_POST)){
 				$username = $_POST["username"];
+
+				if(strlen($username) == 0){
+					$return = [
+						"error" => true,
+						"errorMessage" => "Username required",
+					];
+					return json_encode($return);
+				}
 		}else{
 			$return = [
 				"error" => true,
@@ -140,6 +213,15 @@ class UserAPI{
 
 		if(array_key_exists("phrase", $_POST)){
 			$password = $_POST["phrase"];
+
+			if(strlen($password) == 0){
+				$return = [
+					"error" => true,
+					"errorMessage" => "Password required",
+				];
+				return json_encode($return);
+			}
+
 		}else{
 			$return = [
 				"error" => true,
@@ -149,14 +231,22 @@ class UserAPI{
 		}
 
 		//check username isn't already present in the db
-		if(true){
+		include_once("sqlHandler/dbconnector.php");
+		$result = $DB->fetch("SELECT Username FROM Users WHERE Username =?", array($username));
+
+		if($result === false){
 
 			$hash = password_hash($password, PASSWORD_BCRYPT);
 
 			//generate auth token
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
+			$expireTime = time() + (4 * 7 * 24 * 60 * 60); // expires in 4 weeks
 
 			//store user info in db
+			
+			$DB->execute("INSERT INTO Users VALUES (?,?)", array($username, $hash));
+			$DB->execute("INSERT INTO Tokens VALUES (?,?,?)", array($token, $username, $expireTime));
+			$DB->execute("INSERT INTO User_Stats VALUES (?,?,?,?,?,?,?,?,?,?,?)", array($username, 0,0,0,0,0,0,0,0,0,0));
 
 			$return = [
 					"error" => false,
@@ -172,7 +262,7 @@ class UserAPI{
 			$return = [
 					"error" => false,
 					"loggedin" => false,
-					"reply" => "User name already used",
+					"reply" => "User name already taken",
 				];
 
 			return json_encode($return);

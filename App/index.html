@@ -78,10 +78,12 @@
 		</section>
 		<section id="login" class="noDisplay">
 			<div class="container">
-				<input type="text" name="username" text="Username">
-				<input type="text" name="password" text="phrase">
-				<button type="submit" name="Log In">Log In</button>
-				<button type="register" name="register">Register</button>
+				<div id="loginbox" class="box">
+					<input class="loginInput" id="usernameField" type="text" name="username" text="Username">
+					<input class="loginInput" id= "passwordField" type="password" name="password" text="phrase">
+					<button id="loginbutton" type="submit" name="Log In">Log In</button>
+					<button id="registerbutton" type="register" name="register">Register</button>
+				</div>
 			</div>
 		</section>
 		<section id="user" class="noDisplay">
@@ -120,5 +122,6 @@
 	</main>
 </body>
 <script src="js/ViewCode.js"></script>
+<script src="js/controller.js"></script>
 <script src="js/MapCode.js"></script>
 </html>
