@@ -5,7 +5,6 @@
 function controller(){
 
 	var view = new viewStuff(this);
-
 	var localStorageBase = "uk.ac.strath.devweb2014.cs317.group17."
 	var apiBase = "https://devweb2014.cis.strath.ac.uk/~gvb12182/CS317/AppCity/api/v1/";
 	var auth = '';
@@ -17,9 +16,12 @@ function controller(){
 	 */
 	this.handleLoggedIn = function(username, authToken){
 
+		user = new userClass(username, authToken);
+
 		if(localStorage){
 			auth = authToken
 			localStorage.setItem(localStorageBase + "auth", auth);
+			localStorage.setItem(localStorageBase + "username", username);
 		}
 
 		$.ajax({
@@ -27,13 +29,30 @@ function controller(){
 			type: 'GET',
 			data: {username: username},
 		})
-		.done(function() {
-			console.log("success");
+		.done(function(response) {
+
+			if(response["error"]){
+				alert("fail");
+			}else{
+
+				$.each(response, function(key, val) {
+					 user.addUserData(key, val);
+				});
+			}
+
 		})
-		.fail(function() {
+		.fail(function(response) {
 			alert("Error getting user info");
-		})
-	}
+		});
+
+		console.log(view.getCurrentView());
+		if(view.getCurrentView() == "login"){
+			view.toggleView("#user", user.getUserName());
+			view.toggleMenu(); //need to suppress the menu opening
+		}
+
+		view.changeText("#menu-User", user.getUserName());
+	};
 
 	/*
 	 * Logs a user in
@@ -130,7 +149,12 @@ function controller(){
 		});
 
 		$("#menu-User").click(function(){
-			view.toggleView("#login", "Login");
+
+			if(user != null){
+				view.toggleView("#user", user.getUserName());
+			}else{
+				view.toggleView("#login", "Login");
+			}
 		});
 
 		$("#menu-Settings").click(function(){
@@ -140,7 +164,6 @@ function controller(){
 		$("#menu-About").click(function(){
 			view.toggleView("#about", "About");
 		});
-
 	};
 
 	/*
@@ -151,19 +174,41 @@ function controller(){
 		controller.initMenuControl();
 
 		/*
-		 * Load auth
+		 * Load auth and check if we are logged in
 		 */
-
-		if (localStorage.getItem( localStorageBase + "auth")) {
+		if (localStorage.getItem( localStorageBase + "auth") && localStorage.getItem( localStorageBase + "username") ) {
         	auth = localStorage.getItem( localStorageBase + "auth");
+        	username = localStorage.getItem( localStorageBase + "username");
+
+ 			$.ajax({
+ 				url: apiBase + "User?request=validAuth",
+ 				type: 'POST',
+ 				data: {auth: auth},
+ 			})
+ 			.done(function(response) {
+ 				
+ 				if(response["error"] == true){
+ 					alert("Fiddlesticks");
+ 				}else{
+ 					if(response["loggedin"] == true){
+ 						alert("User Logged In");
+ 						controller.handleLoggedIn(username, auth);
+ 					}else{
+ 						alert("Need to log in");
+ 					}
+ 				}
+
+ 			})
+ 			.fail(function() {
+ 				console.log("error validating user");
+ 			});
+ 			
     	}
 
 		/*
-		 * log in
+		 * log in controls
 		 */
-
 		$("#loginbutton").click(this.login);
-
 		$("#registerbutton").click(this.createUser);
 
 	}

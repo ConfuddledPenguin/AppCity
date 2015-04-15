@@ -75,6 +75,14 @@ function viewStuff(controller){
 		viewStuff.toggleMenu();
 	};
 
+	this.getCurrentView = function(){
+		return currentView.attr('id');
+	}
+
+	this.changeText = function(id, text){
+		$(id).text(text);
+	}
+
 	this.init();
 
 }

@@ -18,7 +18,7 @@ class UserAPI{
 	public function loggedincheck($auth){
 
 		include_once("sqlHandler/dbconnector.php");
-		$result = $DB->fetch("SELECT * FROM Tokens WHERE Username =?", array($username));
+		$result = $DB->fetch("SELECT * FROM Tokens WHERE Auth_token =?", array($auth));
 
 		if($result === false){
 			$return = [
@@ -30,7 +30,7 @@ class UserAPI{
 			return json_encode($return);
 		}else{
 
-			if($result["expiry"] < time()){
+			if($result["Expires"] > time()){
 				return true;
 			}else{
 				$return = [
@@ -67,12 +67,13 @@ class UserAPI{
 			return $this->login();
 		}else if($this->request === "createUser"){
 			return $this->createUser();
+		}else if($this->request === "validAuth"){
+			return $this->validAuth();
 		}
 
 		//check if user is logged in
 		//before allowing any other actions
-		@require_once 'functions.php';
-		loggedincheck($auth);
+		$this->loggedincheck($auth);
 
 		//other actions
 
@@ -267,6 +268,35 @@ class UserAPI{
 
 			return json_encode($return);
 		}
+	}
+
+	private function validAuth(){
+
+		if(array_key_exists("auth", $_POST)){
+			$auth = $_POST["auth"];
+		}else{
+			$return = [
+					"error" => true,
+					"reply" => "No auth supplied to check",
+				];
+
+			return json_encode($return);
+		}
+
+		$result = $this->loggedincheck($auth);
+
+		if($result === true){
+			$return = [
+					"error" => false,
+					"loggedin" => true,
+					"reply" => "User logged in",
+				];
+
+			return json_encode($return);
+		}else{
+			return $result;
+		}
+
 	}
 }
 
