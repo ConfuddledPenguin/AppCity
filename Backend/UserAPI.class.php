@@ -15,7 +15,7 @@ class UserAPI{
 		}
 	}
 
-	public function loggedincheck(auth){
+	public function loggedincheck($auth){
 
 		include_once("sqlHandler/dbconnector.php");
 		$result = $DB->fetch("SELECT * FROM Tokens WHERE Username =?", array($username));
@@ -24,7 +24,7 @@ class UserAPI{
 			$return = [
 					"error" => false,
 					"loggedin" => false,
-					"reply" => "Unkown Token",
+					"reply" => "Unknown Token",
 				];
 
 			return json_encode($return);
