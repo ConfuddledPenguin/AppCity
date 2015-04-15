@@ -22,7 +22,7 @@ There are three main folders in this project.
 
 The App folder contains the html5 app, the contents should be placed in the root directory that you wish to serve the app from.
 
-The Backend folder contains the php API that the App requires to run. The contents should be placed in the folder 'api/v1' relative to the root folder the app is deployed in. This folder contains a folder called hidden where you should place the information for connecting the the database into the template.
+The Backend folder contains the php API that the App requires to run. The contents should be placed in the folder 'api/v1' relative to the root folder the app is deployed in. This folder contains the sqlHandler folder, in here there is a dbconnectorTemplate file that should be copies with the name "dbconnector.php" and then have the db information added.
 
 The last folder SQL, contains the SQL commands required to set up the database. 
 
