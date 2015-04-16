@@ -14,6 +14,8 @@ CSS written in [sass](http://sass-lang.com/).
 
 [JQuery](http://jquery.com/) heavily used and loved.
 
+[handlebars.js](http://handlebarsjs.com/) used for templating.
+
 DataBase connections handled by [edrackham's](http://edrackham.com/) handy [class](https://github.com/a1phanumeric/PHP-MySQL-Class).
 
 ###Set Up###
