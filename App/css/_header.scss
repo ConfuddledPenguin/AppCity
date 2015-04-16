@@ -17,6 +17,7 @@
 	padding: 0.5rem;
 	z-index: 100;
 	border-bottom: 1px solid darken($mainColor, 20%);
+	transition: all 0.5s linear;
 
 	h1, #menu-icon{
 		float: left;
@@ -36,4 +37,8 @@
 		color: white;
 		content: "\e9bd";
 	}
+}
+
+#header.scroll{
+	box-shadow: 0 0 10px rgba(0,0,0,0.8);
 }

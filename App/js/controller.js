@@ -166,12 +166,134 @@ function controller(){
 		});
 	};
 
+	this.fillPlaces = function(){
+
+		var sauce = $("#place-template").html();
+		var template = Handlebars.compile(sauce);
+
+		var context = {title: "Place", short_des: "A short description", src: "#"};
+		var html = template(context);
+		$("#places-container").append(html);
+
+		var context = {title: "Place 2", short_des: "A short description 2", src: "#"};
+		var html = template(context);
+		$("#places-container").append(html);
+
+		var context = {title: "Place 3", short_des: "A short description 3", src: "#"};
+		var html = template(context);
+		$("#places-container").append(html);
+
+		var context = {title: "Place 4", short_des: "A short description 4", src: "#"};
+		var html = template(context);
+		$("#places-container").append(html);
+
+		var context = {title: "Place 5", short_des: "A short description 5", src: "#"};
+		var html = template(context);
+		$("#places-container").append(html);
+
+		var context = {title: "Place 6", short_des: "A short description 6", src: "#"};
+		var html = template(context);
+		$("#places-container").append(html);
+
+		var context = {title: "Place 7", short_des: "A short description 7", src: "#"};
+		var html = template(context);
+		$("#places-container").append(html);
+	}
+
+	this.fillGuides = function(){
+
+		var sauce = $("#guide-template").html();
+		var template = Handlebars.compile(sauce);
+
+		var context = {title: "Guide", short_des: "A short description", src: "#"};
+		var html = template(context);
+		$("#guide-container").append(html);
+
+		var context = {title: "Guide 2", short_des: "A short description 2", src: "#"};
+		var html = template(context);
+		$("#guide-container").append(html);
+
+		var context = {title: "Guide 3", short_des: "A short description 3", src: "#"};
+		var html = template(context);
+		$("#guide-container").append(html);
+
+		var context = {title: "Guide 4", short_des: "A short description 4", src: "#"};
+		var html = template(context);
+		$("#guide-container").append(html);
+
+		var context = {title: "Guide 5", short_des: "A short description 5", src: "#"};
+		var html = template(context);
+		$("#guide-container").append(html);
+
+		var context = {title: "Guide 6", short_des: "A short description 6", src: "#"};
+		var html = template(context);
+		$("#guide-container").append(html);
+
+		var context = {title: "Guide 7", short_des: "A short description 7", src: "#"};
+		var html = template(context);
+		$("#guide-container").append(html);
+	}
+
+	this.fillEvents = function(){
+
+		var sauce = $("#event-template").html();
+		var template = Handlebars.compile(sauce);
+
+		var context = {title: "Event", short_des: "A short description", src: "#"};
+		var html = template(context);
+		$("#event-container").append(html);
+
+		var context = {title: "Event 2", short_des: "A short description 2", src: "#"};
+		var html = template(context);
+		$("#event-container").append(html);
+
+		var context = {title: "Event 3", short_des: "A short description 3", src: "#"};
+		var html = template(context);
+		$("#event-container").append(html);
+
+		var context = {title: "Event 4", short_des: "A short description 4", src: "#"};
+		var html = template(context);
+		$("#event-container").append(html);
+
+		var context = {title: "Event 5", short_des: "A short description 5", src: "#"};
+		var html = template(context);
+		$("#event-container").append(html);
+
+		var context = {title: "Event 6", short_des: "A short description 6", src: "#"};
+		var html = template(context);
+		$("#event-container").append(html);
+
+		var context = {title: "Event 7", short_des: "A short description 7", src: "#"};
+		var html = template(context);
+		$("#event-container").append(html);
+	}
+
 	/*
 	 * initializes the controller
 	 */
 	this.init = function(){
 
 		controller.initMenuControl();
+
+		//this should be replaced with actual functionality
+		controller.fillPlaces();
+
+		//this should be replaced with actual functionality
+		controller.fillGuides();
+
+		//this should be replaced with actual functionality
+		controller.fillEvents();
+
+		//scrolling menu effect
+		$("main").scroll(function(event) {
+
+			var scroll = $("main").scrollTop();
+			if(scroll > 0){
+				$("#header").addClass('scroll');
+			}else{
+				$("#header").removeClass('scroll');
+			}
+		});
 
 		/*
 		 * Load auth and check if we are logged in

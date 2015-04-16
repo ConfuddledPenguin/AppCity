@@ -12,7 +12,7 @@
 	<script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6Gc0XW1xBwcIXwnRC3EZt2gP8_yrHwF0"></script>
 </head>
 <body>
-	<header class="clearfix">
+	<header id="header" class="clearfix">
 		<a id="menu-icon" class="icon" href="#"><span></span></a>
 		<h1 id="headerTitle">Explore</h1>
 	</header>
@@ -68,24 +68,18 @@
 			<p><div style="height: 100%;" id="map-canvas"></div></p>
 		</section>
 		<section id="places" class="noDisplay">
-			<div class="container">
-				<div class="box">
-					<p>Places go here</p>
-				</div>
+			<div class="container" id="places-container">
+				
 			</div>
 		</section>
 		<section id="guides" class="noDisplay">
-			<div class="container">
-				<div class="box">
-					<p>Guides go here</p>
-				</div>
+			<div class="container" id="guide-container">
+
 			</div>
 		</section>
 		<section id="events" class="noDisplay">
-			<div class="container">
-				<div class="box">
-					<p>Events go here</p>
-				</div>
+			<div class="container" id="event-container">
+
 			</div>
 		</section>
 		<section id="login" class="noDisplay">
@@ -147,7 +141,48 @@
 		</section>
 	</main>
 </body>
-<script src="js/ViewCode.js"></script>
+<script id="place-template" type="text/x-handlebars-template">
+	<div class="box placebox">
+		<a href="#">
+			<img src="{{src}}" alt="Image of {{title}}">
+		</a>
+		<a href="#" class="icon locationIcon"></a>
+		<a href="#">
+			<div class="info clearfix">
+				<h2>{{title}}</h2>
+				<p>{{short_des}}</p>
+			</div>
+		</a>
+	</div>
+</script>
+<script id="guide-template" type="text/x-handlebars-template">
+	<div class="box guidebox">
+		<a href="#">
+			<img src="{{src}}" alt="Image of {{title}}">
+		</a>
+		<a href="#">
+			<div class="info clearfix">
+				<h2>{{title}}</h2>
+				<p>{{short_des}}</p>
+			</div>
+		</a>
+	</div>
+</script>
+<script id="event-template" type="text/x-handlebars-template">
+	<div class="box eventbox">
+		<a href="#">
+			<img src="{{src}}" alt="Image of {{title}}">
+		</a>
+		<a href="#" class="icon locationIcon"></a>
+		<a href="#">
+			<div class="info clearfix">
+				<h2>{{title}}</h2>
+				<p>{{short_des}}</p>
+			</div>
+		</a>
+	</div>
+</script>
+<script src="js/handlebars-v3.0.1.js"></script>
 <script src="js/userClass.js"></script>
 <script src="js/view.js"></script>
 <script src="js/controller.js"></script>

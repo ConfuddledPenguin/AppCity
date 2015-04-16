@@ -57,6 +57,15 @@ p {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+.locationIcon:before {
+  font-size: 1.5rem;
+  font-family: icomoon;
+  color: white;
+  content: "\e947";
+  background-color: red;
+  padding: 0.5rem;
+  border-radius: 5rem; }
+
 @-webkit-keyframes mainfade {
   0% {
     opacity: 1; }
@@ -107,7 +116,8 @@ header {
   color: white;
   padding: 0.5rem;
   z-index: 100;
-  border-bottom: 1px solid #990000; }
+  border-bottom: 1px solid #990000;
+  transition: all 0.5s linear; }
   header h1, header #menu-icon {
     float: left; }
   header h1 {
@@ -120,6 +130,9 @@ header {
     font-family: icomoon;
     color: white;
     content: "\e9bd"; }
+
+#header.scroll {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); }
 
 @-webkit-keyframes menuslide {
   0% {
@@ -278,6 +291,31 @@ header {
     font-size: 1.4rem;
     padding-bottom: 0.4rem; }
 
+.placebox, .guidebox, .eventbox {
+  padding: 0; }
+  .placebox a, .placebox a:visited, .guidebox a, .guidebox a:visited, .eventbox a, .eventbox a:visited {
+    color: black; }
+  .placebox img, .guidebox img, .eventbox img {
+    width: 100%;
+    height: 6rem; }
+  .placebox .info, .guidebox .info, .eventbox .info {
+    padding: 0.5rem; }
+  .placebox .locationIcon, .guidebox .locationIcon, .eventbox .locationIcon {
+    position: relative; }
+  .placebox .locationIcon:before, .guidebox .locationIcon:before, .eventbox .locationIcon:before {
+    position: relative;
+    float: right;
+    top: -1.5rem;
+    left: -1rem; }
+
+/* 
+ * This is the style sheet for the ###COME UP WITH AWESOME NAME header
+ * 
+ * This stylesheet is written in sass and should be pre-processed to generate
+ * the css file on which the app relies.
+ *
+ * This is the style for the places section
+ */
 /* 
  * This is the style sheet for the ###COME UP WITH AWESOME NAME header
  * 

@@ -80,6 +80,16 @@ p{
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.locationIcon:before{
+	font-size: 1.5rem;
+	font-family: icomoon;
+	color: white;
+	content: "\e947";
+	background-color: $mainColor;
+	padding: 0.5rem;
+	border-radius: 5rem;
+}
+
 @include main-fade-keyframes(1, 0.8);
 .fade-out{
 	@include animation(mainfade, 0.5s, ease, forwards);
@@ -92,5 +102,7 @@ p{
 @import "_header.scss";
 @import "_menu.scss";
 @import "_sections.scss";
+@import "_places.scss";
 @import "_login.scss";
 @import "_about.scss";
+
