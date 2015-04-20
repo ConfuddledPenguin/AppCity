@@ -182,15 +182,6 @@ class UserAPI extends CoreAPI {
         private function errorUsernameInvalid($username) {
             return $this->error("{$username}: username does not exist");
         }
-        
-        private function error($message) {
-            $error = [
-                "error" => true,
-                "errorMessage" => $message
-            ];
-            
-            return json_encode($error);
-        }
 
         ## success responses
         

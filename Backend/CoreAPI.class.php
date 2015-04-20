@@ -32,13 +32,12 @@ class CoreAPI {
         return $this->errorUnknownRequest();
     }
     
-    private function errorUnknownRequest() {
-        $error = [
-            "error" => true,
-            "errorMessage" => "Request unknown."
-        ];
-        
-        return json_encode($error);
+    protected function checkAuth() {
+        if (array_key_exists("auth", $_POST)) {
+            return $this->loggedincheck($_POST["auth"]);
+        } else {
+            return $this->errorAuthRequired();
+        }
     }
     
     protected function loggedincheck($auth){
@@ -60,6 +59,25 @@ class CoreAPI {
         }
         
         return json_encode($not_logged);
+    }
+    
+    ## error responses
+    
+    protected function error($message) {
+        $error = [
+            "error" => true,
+            "errorMessage" => $message
+        ];
+        
+        return json_encode($error);
+    }
+    
+    private function errorAuthRequired() {
+        return $this->error("Auth required as a parameter");
+    }
+    
+    private function errorUnknownRequest() {
+        return $this->error("Request unknown");
     }
     
 }

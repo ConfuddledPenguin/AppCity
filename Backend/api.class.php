@@ -27,13 +27,16 @@ class API{
 
 	public function process(){
 
+                $api = null;
 		switch ($this->request) {
 			case 'User':
-				require_once 'UserAPI.class.php';
-				$UserAPI = new UserAPI($this->method);
-				return $UserAPI->process();
-				break;
-			
+                            require_once 'UserAPI.class.php';
+                            $api = new UserAPI($this->method);
+                            break;
+                        case 'Place':
+                            require_once 'PlaceAPI.class.php';
+                            $api = new PlaceAPI($this->method);
+                            break;
 			default:
 
 				$fish = false;
@@ -50,8 +53,9 @@ class API{
 				];
 
 				return json_encode($data);
-				break;
 		}
+                
+                return $api->process();
 	}
 	
 }
