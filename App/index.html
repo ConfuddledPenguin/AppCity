@@ -96,13 +96,14 @@
 		<section id="user" class="noDisplay">
 			<div class="container">
 				<div class="box">
-					<p>username</p>
+					<h2 id="userUsername">username</h2>
 				</div>
-				<div class="box">
-					<p>Community rating</p>
+				<div class="box" id="communityRating">
+					<h2>Community rating</h2>
+					<p id="userCommunityRating">0</p>
 				</div>
-				<div class="box">
-					<p>User stats</p>
+				<div class="box clearfix" id="userStats">
+					<h2>User statistics</h2>
 				</div>
 			</div>
 		</section>
@@ -187,11 +188,17 @@
 		</a>
 	</div>
 </script>
-<script id=session-management-template type="text/x-handlebars-template">
+<script id="session-management-template" type="text/x-handlebars-template">
 	<div class="tokenDisplay" id="token-display-{{token}}">
 		<p>Token: {{compressedToken}}</p>
 		<p class="clearfix">Expires: {{expires}}</p>
 		<button class="remove-auth-token" id="token-delete-{{token}}" token="{{token}}">Delete</button>
+	</div>
+</script>
+<script id="user-stat" type="text/x-handlebars-template">
+	<div class="userStat">
+		<p>{{title}}</p>
+		<p>{{value}}</p>
 	</div>
 </script>
 <script src="js/userClass.js"></script>

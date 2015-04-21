@@ -38,8 +38,13 @@ function controller(){
 				$.each(response, function(key, val) {
 					 user.addUserData(key, val);
 				});
-			}
 
+				$("#userUsername").text(user.getUserName());
+
+				$('#userCommunityRating').text(user.getUserData("Community_Rating"));
+
+				controller.showUserStats();
+			}
 		})
 		.fail(function(response) {
 			alert("Error getting user info");
@@ -53,6 +58,49 @@ function controller(){
 
 		view.changeText("#menu-User", user.getUserName());
 	};
+
+	this.showUserStats = function(){
+
+		var sauce = $("#user-stat").html();
+		var template = Handlebars.compile(sauce);
+
+		var context = {title: "Locations Added", value: user.getUserData("Locations_Added")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+		var context = {title: "Locations Modified", value: user.getUserData("Locations_Modified")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+		var context = {title: "Locations Rated", value: user.getUserData("Locations_Rated")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+		var context = {title: "Guides Added", value: user.getUserData("Guides_Added")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+		var context = {title: "Guides Modified", value: user.getUserData("Guides_Modified")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+		var context = {title: "Guides Rated", value: user.getUserData("Guides_Rated")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+		var context = {title: "Events Created", value: user.getUserData("Events_Created")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+		var context = {title: "Events Modified", value: user.getUserData("Events_Modified")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+		var context = {title: "Events Rated", value: user.getUserData("Events_Rated")};
+		var html = template(context);
+		$("#userStats").append(html);
+
+	}
 
 	this.handleLoggedOut = function(){
 
