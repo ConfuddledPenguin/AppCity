@@ -5,8 +5,8 @@
 function viewStuff(controller){
 
 	var viewStuff = this;
-
 	var menuVisible = false;
+	var sessionsVisible = false;
 	var currentView = $("#explore");
 
 	/*
@@ -60,6 +60,17 @@ function viewStuff(controller){
 			$("#menu").removeClass('menu-visible');
 			$("main").removeClass('fade-out');
 			menuVisible = false;
+		}
+	}
+
+	this.toggleSessions = function(){
+
+		if(!sessionsVisible){
+			$("#sessions-box").removeClass('noDisplay');
+			sessionsVisible = true;
+		}else{
+			$("#sessions-box").addClass('noDisplay');
+			sessionsVisible = false;
 		}
 	}
 

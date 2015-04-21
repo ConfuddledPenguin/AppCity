@@ -108,8 +108,12 @@
 		</section>
 		<section id="settings" class="noDisplay">
 			<div class="container">
-				<div class="box">
-					<p>Settings go here</p>
+				<div class="box" id="settings-logout">
+					<h2>Log out</h2>
+				</div>
+				<div class="box" >
+					<h2 id="settings-manage-sessions">Manage sessions</h2>
+					<div id="sessions-box" class="noDisplay"></div>
 				</div>
 			</div>
 		</section>
@@ -181,6 +185,13 @@
 				<p>{{short_des}}</p>
 			</div>
 		</a>
+	</div>
+</script>
+<script id=session-management-template type="text/x-handlebars-template">
+	<div class="tokenDisplay" id="token-display-{{token}}">
+		<p>Token: {{compressedToken}}</p>
+		<p class="clearfix">Expires: {{expires}}</p>
+		<button class="remove-auth-token" id="token-delete-{{token}}" token="{{token}}">Delete</button>
 	</div>
 </script>
 <script src="js/userClass.js"></script>

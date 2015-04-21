@@ -14,12 +14,30 @@ class UserAPI extends CoreAPI {
                 return $this->validAuth();
             }
 
-            //check if user is logged in
-            //before allowing any other actions
-            $this->loggedincheck($auth);
+            if(array_key_exists("auth", $_POST)){
+				$auth = $_POST["auth"];
+			}else{
+				return $this>error("Auth Code required");
+			}
 
-            //other actions
-            
+            //check if user is logged in
+			//before allowing any other actions
+			$result = $this->loggedincheck($auth);
+
+			if($result === true){
+				
+			}else{
+				return $result;
+			}
+
+			if ($this->request === "logout") {
+				return $this->logout();
+			}else if($this->request === "getCurrentSessions"){
+				return $this->getCurrentSessions();
+			}else if($this->request === "authClose"){
+				return $this->authClose();
+			}
+
             parent::processPOST();
         }
         
@@ -55,6 +73,7 @@ class UserAPI extends CoreAPI {
 	 * Logs a user in
 	 */
 	private function login(){
+
             if(array_key_exists("username", $_POST)){
                 $username = $_POST["username"];
             }else{
@@ -129,7 +148,7 @@ class UserAPI extends CoreAPI {
 
 			//generate auth token
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
-			$expireTime = time() + (4 * 7 * 24 * 60 * 60); // expires in 4 weeks
+			$expireTime = time() + (((3600 * 24) * 7) * 4); // expires in 4 weeks
 
 			//store user info in db
 			
@@ -142,6 +161,64 @@ class UserAPI extends CoreAPI {
 		}else{
                     return $this->successUsernameTaken();
 		}
+	}
+
+	private function logout(){
+
+		$auth = $_POST["auth"];
+
+		include_once("sqlHandler/dbconnector.php");
+		$DB = new DBPDO();
+		$DB->execute("DELETE FROM Tokens WHERE Auth_token=?", array($auth));
+
+		$return = [
+					"error" => false,
+					"loggedout" => true,
+					"reply" => "User logged out",
+				];
+
+		return json_encode($return);
+
+	}
+
+	private function authClose(){
+
+		$auth = $_POST["auth"];
+
+		if(array_key_exists("authClose", $_POST)){
+			$authClose = $_POST["authClose"];
+		}else{
+			return $this->error("No auth supplied to close");
+		}
+
+
+		include_once("sqlHandler/dbconnector.php");
+		$DB = new DBPDO();
+		$username = $this->getUsername($auth);
+		$DB->execute("DELETE FROM Tokens WHERE Auth_token=? AND Username=?", array($authClose, $username));
+
+		$return = [
+					"error" => false,
+					"closed" => true,
+					"sessionClosed" => $authClose,
+					"reply" => "Session closed",
+				];
+
+		return json_encode($return);
+
+	}
+
+	private function getCurrentSessions(){
+
+		$auth = $_POST["auth"];
+
+		$username = $this->getUserName($auth);
+
+		$DB = new DBPDO();
+		$result = $DB->fetchall("SELECT Auth_token, Expires FROM Tokens WHERE Username=?", array($username));
+
+		return json_encode($result);
+
 	}
 
 	private function validAuth(){

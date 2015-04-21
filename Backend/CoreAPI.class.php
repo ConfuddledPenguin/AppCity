@@ -60,6 +60,37 @@ class CoreAPI {
         
         return json_encode($not_logged);
     }
+
+    public function getUsername($auth){
+
+        include_once("sqlHandler/dbconnector.php");
+        $DB = new DBPDO();
+        $result = $DB->fetch("SELECT * FROM Tokens WHERE Auth_token =?", array($auth));
+
+        if($result === false){
+            $return = [
+                    "error" => false,
+                    "loggedin" => false,
+                    "reply" => "Unknown Token",
+                ];
+
+            return json_encode($return);
+        }else{
+
+            if($result["Expires"] > time()){
+                return $result["Username"];
+            }else{
+                $return = [
+                    "error" => false,
+                    "loggedin" => false,
+                    "reply" => "Expired token",
+                ];
+
+            return json_encode($return);
+            }
+        }
+
+    }
     
     ## error responses
     
