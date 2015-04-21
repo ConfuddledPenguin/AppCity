@@ -46,14 +46,15 @@ class PlaceAPI extends CoreAPI {
             return $this->error("Longitude parameter is reuqired");
         }
         
-        $long_desc = array_key_exists("long_desc", $_POST) ? $_POST["long_desc"] : "";
-        $address = array_key_exists("address", $_POST) ? $_POST["address"] : "";
-        $link = array_key_exists("link", $_POST) ? $_POST["link"] : "";
-        $phone = array_key_exists("phone", $_POST) ? $_POST["phone"] : "";
+        $long_desc = array_key_exists("long_desc", $_POST) ? $_POST["long_desc"] : null;
+        $address = array_key_exists("address", $_POST) ? $_POST["address"] : null;
+        $imageURL = array_key_exists("imageURL", $_POST) ? $_POST["imageURL"] : null;
+        $link = array_key_exists("link", $_POST) ? $_POST["link"] : null;
+        $phone = array_key_exists("phone", $_POST) ? $_POST["phone"] : null;
         
         include_once("sqlHandler/dbconnector.php");
         $DB = new DBPDO();
-        $DB->execute("INSERT INTO Places(Name,Short_des,Lat_coord,Long_coord,Long_des,Address,Link,Phone) VALUES (?,?,?,?,?,?,?,?)", array($name,$short_desc,$lat,$long,$long_desc,$address,$link,$phone));
+        $DB->execute("INSERT INTO Places(Name,Short_des,Lat_coord,Long_coord,Long_des,Address,Image,Link,Phone) VALUES (?,?,?,?,?,?,?,?,?)", array($name,$short_desc,$lat,$long,$long_desc,$address,$imageURL,$link,$phone));
         
         return $this->successPlaceAdded();
     }
