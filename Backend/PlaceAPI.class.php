@@ -12,6 +12,8 @@ class PlaceAPI extends CoreAPI {
         
         if ($this->request === "addPlace") {
             return $this->addPlace();
+        } elseif ($this->request === "ratePlace") {
+            return $this->ratePlace();
         }
         
         return parent::processPOST();
@@ -104,6 +106,51 @@ class PlaceAPI extends CoreAPI {
         } else {
             return json_encode($result);
         }
+    }
+    
+    private function ratePlace() {
+        if (array_key_exists("place_id", $_POST)) {
+            $place_id = $_POST["place_id"];
+        } else {
+            return $this->error("Place ID parameter is required");
+        }
+        
+        if (array_key_exists("auth", $_POST)) {
+            $auth = $_POST["auth"];
+        } else {
+            return $this->error("Auth parameter is required");
+        }
+        
+        if (array_key_exists("rating", $_POST)) {
+            $rating = $_POST["rating"];
+            if ($rating < 0 || $rating > 10) {
+                return $this->error("Rating must be in range 0..10");
+            }
+        } else {
+            return $this->error("Rating parameter is required");
+        }
+        
+        include_once('sqlHandler/dbconnector.php');
+        $DB = new DBPDO();
+        $username = $DB->fetch("SELECT Username FROM Tokens WHERE Auth_token = ?",array($auth));
+        
+        if ($username === false) {
+            return $this->error("Cannot find user");
+        } else {
+            $username = $username["Username"];
+        }
+        
+        $currentRating = $DB->fetch("SELECT * FROM Place_Ratings WHERE Username = ? AND Place_ID = ?",array($username,$place_id));
+        if ($currentRating === false) {
+            $DB->execute("INSERT INTO Place_Ratings(Username,Place_ID,Rating) VALUES(?,?,?)",array($username,$place_id,$rating));
+        } else {
+            $DB->execute("UPDATE Place_Ratings SET Rating = ? WHERE Username = ? AND Place_ID = ?",array($rating,$username,$place_id));
+        }
+        
+        $DB->execute("UPDATE Places SET Av_Rating = (SELECT AVG(Rating) FROM Place_Ratings WHERE Place_ID = ?) WHERE ID = ?",array($place_id,$place_id));
+        $result = $DB->fetch("SELECT ID, Av_Rating FROM Places WHERE ID = ?",array($place_id));
+        
+        return json_encode($result);
     }
     
     ## error responses

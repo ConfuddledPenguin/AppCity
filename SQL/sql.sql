@@ -32,6 +32,22 @@ CREATE TABLE Places (
   Phone      varchar(32),
   PRIMARY KEY (ID)
 );
+CREATE TABLE Place_Ratings (
+    Username    varchar(255) NOT NULL,
+    Place_ID    int(10) NOT NULL,
+    Rating      int(2) NOT NULL,
+    PRIMARY KEY (Username,Place_ID),
+    CONSTRAINT fk_Place_Ratings_Users
+        FOREIGN KEY (Username)
+        REFERENCES Users (Username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_Place_Ratings_Places
+        FOREIGN KEY (Place_ID)
+        REFERENCES Places (ID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
 CREATE TABLE Tokens (
   Auth_token varchar(255) NOT NULL, 
   Username   varchar(255) NOT NULL,
