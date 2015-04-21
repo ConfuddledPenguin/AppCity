@@ -9,7 +9,7 @@
  * Global Vars
  ******************************************************************************/
 
-$backgroundColor: #000000;
+$backgroundColor: #E5E5E5;
 $mainColor: red;
 $highlightColor: blue;
 $textColor: green;
@@ -38,12 +38,12 @@ $textColor: green;
 html, body{
 	font-family: 'Roboto', sans-serif;
 	height: 100%;
-	background-color: #E5E5E5;
+	background-color: $backgroundColor;
 }
 
 section{
 	height: 100%;
-	background: #E5E5E5;
+	background: $backgroundColor;
 }
 
 #view{
@@ -52,7 +52,7 @@ section{
 	width: 100%;
 	height: calc(100% - 3.25rem);
 	overflow-y: auto;
-	background-color: #E5E5E5;
+	background-color: $backgroundColor;
 	opacity: inherit;
 }
 
@@ -105,4 +105,5 @@ p{
 @import "_places.scss";
 @import "_login.scss";
 @import "_about.scss";
+@import "_settings.scss";
 

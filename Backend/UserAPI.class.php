@@ -6,6 +6,8 @@ class UserAPI{
 
 	private $request = '';
 
+	private $DB = null;
+
 	public function __construct($method){
 
 		$this->method = $method;
@@ -44,6 +46,37 @@ class UserAPI{
 		}
 	}
 
+	public function getUsername($auth){
+
+		include_once("sqlHandler/dbconnector.php");
+		$DB = new DBPDO();
+		$result = $DB->fetch("SELECT * FROM Tokens WHERE Auth_token =?", array($auth));
+
+		if($result === false){
+			$return = [
+					"error" => false,
+					"loggedin" => false,
+					"reply" => "Unknown Token",
+				];
+
+			return json_encode($return);
+		}else{
+
+			if($result["Expires"] > time()){
+				return $result["Username"];
+			}else{
+				$return = [
+					"error" => false,
+					"loggedin" => false,
+					"reply" => "Expired token",
+				];
+
+			return json_encode($return);
+			}
+		}
+
+	}
+
 	public function process(){
 
 		switch ($this->method) {
@@ -71,11 +104,33 @@ class UserAPI{
 			return $this->validAuth();
 		}
 
+		if(array_key_exists("auth", $_POST)){
+			$auth = $_POST["auth"];
+		}else{
+			$return = [
+				"error" => true,
+				"errorMessage" => "Auth Code required",
+			];
+			return json_encode($return);
+		}
+
 		//check if user is logged in
 		//before allowing any other actions
-		$this->loggedincheck($auth);
+		$result = $this->loggedincheck($auth);
 
-		//other actions
+		if($result === true){
+			
+		}else{
+			return $result;
+		}
+
+		if ($this->request === "logout") {
+			return $this->logout();
+		}else if($this->request === "getCurrentSessions"){
+			return $this->getCurrentSessions();
+		}else if($this->request === "authClose"){
+			return $this->authClose();
+		}
 
 		//and if here we don't know what they want
 		$return = [
@@ -165,7 +220,7 @@ class UserAPI{
 			//generate auth token
 			//need to store this along with a date of expiry
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
-			$expireTime = time() + (4 * 7 * 24 * 60 * 60); // expires in 4 weeks
+			$expireTime = (4*7*24*3600) + time(); // expires in 4 weeks
 
 			$DB->execute("INSERT INTO Tokens VALUES (?,?,?)", array($token, $username, $expireTime));
 
@@ -241,7 +296,7 @@ class UserAPI{
 
 			//generate auth token
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
-			$expireTime = time() + (4 * 7 * 24 * 60 * 60); // expires in 4 weeks
+			$expireTime = time() + (((3600 * 24) * 7) * 4); // expires in 4 weeks
 
 			//store user info in db
 			
@@ -268,6 +323,87 @@ class UserAPI{
 
 			return json_encode($return);
 		}
+	}
+
+	private function logout(){
+
+		if(array_key_exists("auth", $_POST)){
+			$auth = $_POST["auth"];
+		}else{
+			$return = [
+					"error" => true,
+					"reply" => "No auth supplied to check",
+				];
+
+			return json_encode($return);
+		}
+
+		include_once("sqlHandler/dbconnector.php");
+		$DB = new DBPDO();
+		$DB->execute("DELETE FROM Tokens WHERE Auth_token=?", array($auth));
+
+		$return = [
+					"error" => false,
+					"loggedout" => true,
+					"reply" => "User logged out",
+				];
+
+		return json_encode($return);
+
+	}
+
+	private function authClose(){
+
+		$auth = $_POST["auth"];
+
+		if(array_key_exists("authClose", $_POST)){
+			$authClose = $_POST["authClose"];
+		}else{
+			$return = [
+					"error" => true,
+					"reply" => "No auth supplied to close",
+				];
+
+			return json_encode($return);
+		}
+
+
+		include_once("sqlHandler/dbconnector.php");
+		$DB = new DBPDO();
+		$username = $this->getUsername($auth);
+		$DB->execute("DELETE FROM Tokens WHERE Auth_token=? AND Username=?", array($authClose, $username));
+
+		$return = [
+					"error" => false,
+					"closed" => true,
+					"sessionClosed" => $authClose,
+					"reply" => "Session closed",
+				];
+
+		return json_encode($return);
+
+	}
+
+	private function getCurrentSessions(){
+
+		if(array_key_exists("auth", $_POST)){
+			$auth = $_POST["auth"];
+		}else{
+			$return = [
+					"error" => true,
+					"reply" => "No auth supplied to check",
+				];
+
+			return json_encode($return);
+		}
+
+		$username = $this->getUserName($auth);
+
+		$DB = new DBPDO();
+		$result = $DB->fetchall("SELECT Auth_token, Expires FROM Tokens WHERE Username=?", array($username));
+
+		return json_encode($result);
+
 	}
 
 	private function validAuth(){

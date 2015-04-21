@@ -54,6 +54,19 @@ function controller(){
 		view.changeText("#menu-User", user.getUserName());
 	};
 
+	this.handleLoggedOut = function(){
+
+		user = null;
+
+		if(localStorage){
+			localStorage.setItem(localStorageBase + "auth", "");
+			localStorage.setItem(localStorageBase + "username", "");
+		}
+
+		view.changeText("#menu-User", "Log In");
+
+	};
+
 	/*
 	 * Logs a user in
 	 */ 
@@ -126,6 +139,106 @@ function controller(){
 				alert("Fiddlesticks I have gone wrong, sorry about that...");
 				console.log(data);
 			});
+	}
+
+	this.logout = function(){
+
+		$.ajax({
+			url: apiBase + 'User?request=logout',
+			type: 'POST',
+			data: {auth: user.getUserAuth()},
+		})
+		.done(function(result) {
+			
+			if(result["error"] === true){
+				alert("Error Logging out user");
+			}
+
+			if(result["loggedout"] === true){
+				alert("User logged out");
+			}
+
+			controller.handleLoggedOut();
+
+		})
+		.fail(function(result) {
+			alert("Fiddlesticks I have gone wrong, sorry about that...");
+				console.log(result);
+		});
+	};
+
+	this.getCurrentSessions = function(){
+
+		$("#sessions-box").html("");
+
+		if(user == null){
+
+			$("#sessions-box").append("<p>You need to log in first</p>");
+
+			return;
+		}
+
+		$.ajax({
+			url: apiBase + 'User?request=getCurrentSessions',
+			type: 'POST',
+			data: {auth: user.getUserAuth()},
+		})
+		.done(function(result) {
+			
+			var count = 0;
+			
+			$.each(result, function(index, val) {
+				 count++;
+			});
+
+			console.log(count);
+
+			if(count == 1){
+
+				$("#sessions-box").append("<p>There are no other open sessions</p>");
+
+			}else{
+
+				var sauce = $("#session-management-template").html();
+				var template = Handlebars.compile(sauce);
+
+				$.each(result, function(index, val) {
+
+					if(val["Auth_token"] != user.getUserAuth()){
+
+						var expires = val["Expires"];
+						var date = new Date(expires*1000);
+						var expires = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+
+						var context = {token: val["Auth_token"], compressedToken: val["Auth_token"].substring(0,5), expires: expires};
+						var html = template(context);
+						$("#sessions-box").append(html);
+
+						$("#token-delete-"+val["Auth_token"]).click(function(event) {
+							
+							var token = $("#token-delete-"+val["Auth_token"]).attr('token');
+
+							$.ajax({
+								url: apiBase + 'User?request=authClose',
+								type: 'POST',
+								data: {auth: user.getUserAuth(), authClose: token},
+							})
+							.done(function(data) {
+								
+								$('#token-display-'+token).remove();
+							})
+							.fail(function() {
+								alert("Fiddlesticks I have gone wrong. sorry about that...");
+							});//close inner jquery
+						});//close click action
+					}//close for if
+				});//close for each
+			}
+		})
+		.fail(function() {
+			alert("Fiddlesticks I have gone wrong, sorry about that...");
+		});	
+
 	}
 
 	this.initMenuControl = function(){
@@ -333,6 +446,14 @@ function controller(){
 		$("#loginbutton").click(this.login);
 		$("#registerbutton").click(this.createUser);
 
+		/*
+		 * Settings controls
+		 */
+		$("#settings-logout").click(this.logout);
+		$("#settings-manage-sessions").click(function(){
+			controller.getCurrentSessions();
+			view.toggleSessions();
+		});
 	}
 
 	this.init();
