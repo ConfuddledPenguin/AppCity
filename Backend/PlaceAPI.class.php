@@ -12,13 +12,19 @@ class PlaceAPI extends CoreAPI {
         
         if ($this->request === "addPlace") {
             return $this->addPlace();
+        } elseif ($this->request === "ratePlace") {
+            return $this->ratePlace();
         }
         
-        parent::processPOST();
+        return parent::processPOST();
     }
     
     protected function processGET() {
-        parent::processGET();
+        if ($this->request === "getPlaces") {
+            return $this->getPlaces();
+        }
+        
+        return parent::processGET();
     }
     
     private function addPlace() {
@@ -57,6 +63,94 @@ class PlaceAPI extends CoreAPI {
         $DB->execute("INSERT INTO Places(Name,Short_des,Lat_coord,Long_coord,Long_des,Address,Image,Link,Phone) VALUES (?,?,?,?,?,?,?,?,?)", array($name,$short_desc,$lat,$long,$long_desc,$address,$imageURL,$link,$phone));
         
         return $this->successPlaceAdded();
+    }
+    
+    private function getPlaces() {
+        if (array_key_exists("tl_lat", $_GET)) {
+            $tl_lat = $_GET["tl_lat"];
+        } else {
+            return $this->error("Top-left latitude parameter is required");
+        }
+        
+        if (array_key_exists("tl_long", $_GET)) {
+            $tl_long = $_GET["tl_long"];
+        } else {
+            return $this->error("Top-left longitude parameter is reuqired");
+        }
+        
+        if (array_key_exists("br_lat", $_GET)) {
+            $br_lat = $_GET["br_lat"];
+        } else {
+            return $this->error("Bottom-right latitude parameter is required");
+        }
+        
+        if (array_key_exists("br_long", $_GET)) {
+            $br_long = $_GET["br_long"];
+        } else {
+            return $this->error("Bottom-right longitude parameter is reuqired");
+        }
+        
+        if (array_key_exists("offset", $_GET)) {
+            $offset = $_GET["offset"];
+        } else {
+            return $this->error("Offset parameter is required");
+        }
+        
+        include_once('sqlHandler/dbconnector.php');
+        $DB = new DBPDO();
+        // offset inserted using variable interpolation as prepared statements treat all values as strings.
+        $result = $DB->fetchAll("SELECT * FROM Places WHERE Lat_coord <= ? AND Lat_coord >= ? AND Long_coord >= ? AND Long_coord <= ? LIMIT {$offset},10",array($tl_lat,$br_lat,$tl_long,$br_long));
+        
+        if ($result === false) {
+            return $this->error("Failed to fetch places");
+        } else {
+            return json_encode($result);
+        }
+    }
+    
+    private function ratePlace() {
+        if (array_key_exists("place_id", $_POST)) {
+            $place_id = $_POST["place_id"];
+        } else {
+            return $this->error("Place ID parameter is required");
+        }
+        
+        if (array_key_exists("auth", $_POST)) {
+            $auth = $_POST["auth"];
+        } else {
+            return $this->error("Auth parameter is required");
+        }
+        
+        if (array_key_exists("rating", $_POST)) {
+            $rating = $_POST["rating"];
+            if ($rating < 0 || $rating > 10) {
+                return $this->error("Rating must be in range 0..10");
+            }
+        } else {
+            return $this->error("Rating parameter is required");
+        }
+        
+        include_once('sqlHandler/dbconnector.php');
+        $DB = new DBPDO();
+        $username = $DB->fetch("SELECT Username FROM Tokens WHERE Auth_token = ?",array($auth));
+        
+        if ($username === false) {
+            return $this->error("Cannot find user");
+        } else {
+            $username = $username["Username"];
+        }
+        
+        $currentRating = $DB->fetch("SELECT * FROM Place_Ratings WHERE Username = ? AND Place_ID = ?",array($username,$place_id));
+        if ($currentRating === false) {
+            $DB->execute("INSERT INTO Place_Ratings(Username,Place_ID,Rating) VALUES(?,?,?)",array($username,$place_id,$rating));
+        } else {
+            $DB->execute("UPDATE Place_Ratings SET Rating = ? WHERE Username = ? AND Place_ID = ?",array($rating,$username,$place_id));
+        }
+        
+        $DB->execute("UPDATE Places SET Av_Rating = (SELECT AVG(Rating) FROM Place_Ratings WHERE Place_ID = ?) WHERE ID = ?",array($place_id,$place_id));
+        $result = $DB->fetch("SELECT ID, Av_Rating FROM Places WHERE ID = ?",array($place_id));
+        
+        return json_encode($result);
     }
     
     ## error responses
