@@ -19,18 +19,17 @@ CREATE TABLE User_Stats (
   PRIMARY KEY (Username)
 );
 CREATE TABLE Places (
-  ID         int(10) NOT NULL AUTO_INCREMENT, 
-  Name       varchar(255) NOT NULL, 
-  Short_des  blob NOT NULL, 
-  Long_des   blob, 
-  Av_Rating  int(10), 
-  Lat_coord  int(10) NOT NULL, 
-  Long_coord int(10) NOT NULL, 
-  Address    int(10), 
-  Place_Type int(10), 
-  Image      int(10), 
-  Link       int(10), 
-  Phone      int(10), 
+  ID         int(10) NOT NULL AUTO_INCREMENT,
+  Name       varchar(255) NOT NULL,
+  Short_des  blob NOT NULL,
+  Long_des   blob,
+  Av_Rating  int(10) NOT NULL DEFAULT 0,
+  Lat_coord  FLOAT(10,6) NOT NULL,
+  Long_coord FLOAT(10,6) NOT NULL,
+  Address    varchar(2048),
+  Image      varchar(2048),
+  Link       varchar(2048),
+  Phone      varchar(32),
   PRIMARY KEY (ID)
 );
 CREATE TABLE Tokens (
