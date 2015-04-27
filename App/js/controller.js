@@ -10,6 +10,8 @@ function controller(){
 	var auth = '';
 	var controller = this;
 	var user = null;
+	var fetchingMoreData = false;
+	var placesFetched = 0;
 
 	/*
 	 * Handles the fact a user has logged in
@@ -50,7 +52,6 @@ function controller(){
 			alert("Error getting user info");
 		});
 
-		console.log(view.getCurrentView());
 		if(view.getCurrentView() == "login"){
 			view.toggleView("#user", user.getUserName());
 			view.toggleMenu(); //need to suppress the menu opening
@@ -60,6 +61,8 @@ function controller(){
 	};
 
 	this.showUserStats = function(){
+
+		$("#userStats").html("<h2>User statistics</h2>");
 
 		var sauce = $("#user-stat").html();
 		var template = Handlebars.compile(sauce);
@@ -234,12 +237,9 @@ function controller(){
 		.done(function(result) {
 			
 			var count = 0;
-			
 			$.each(result, function(index, val) {
 				 count++;
 			});
-
-			console.log(count);
 
 			if(count == 1){
 
@@ -332,33 +332,61 @@ function controller(){
 		var sauce = $("#place-template").html();
 		var template = Handlebars.compile(sauce);
 
-		var context = {title: "Place", short_des: "A short description", src: "#"};
-		var html = template(context);
-		$("#places-container").append(html);
+		$.ajax({
+			url: apiBase + 'Place?request=getPlacesPoint',
+			type: 'GET',
+			data: {lat: 55.87, long: -4, offset: placesFetched},
+		})
+		.done(function(result) {
 
-		var context = {title: "Place 2", short_des: "A short description 2", src: "#"};
-		var html = template(context);
-		$("#places-container").append(html);
+			if(result["error"]){
+				if(result["error"] == true){
+					alert("Fiddlesticks, I have gone wrong, sorry about that...");
+					return;
+				}
+			}
 
-		var context = {title: "Place 3", short_des: "A short description 3", src: "#"};
-		var html = template(context);
-		$("#places-container").append(html);
+			if(result["noPlaces"]){
+				if(result["noPlaces"] == true){
+					if(placesFetched == 0){
+						alert("Sorry no places nearby, try adding some?");
+					}
+					return;
+				}
+			}
 
-		var context = {title: "Place 4", short_des: "A short description 4", src: "#"};
-		var html = template(context);
-		$("#places-container").append(html);
+			var count = 0;
+			$.each(result, function(index, val) {
+				 count++;
+			});
+			placesFetched += count;
 
-		var context = {title: "Place 5", short_des: "A short description 5", src: "#"};
-		var html = template(context);
-		$("#places-container").append(html);
+			$.each(result, function(index, val) {
+				
+				console.log(val);
 
-		var context = {title: "Place 6", short_des: "A short description 6", src: "#"};
-		var html = template(context);
-		$("#places-container").append(html);
+				place = val;
 
-		var context = {title: "Place 7", short_des: "A short description 7", src: "#"};
-		var html = template(context);
-		$("#places-container").append(html);
+				var context = {id: val["ID"], title: val["Name"], short_des: val["Short_des"], src: val["Image"]};
+				var html = template(context);
+				$("#places-container").append(html);
+
+				$('.small-placebox-' + val['ID']).click(function(event) {
+					console.log(val['ID'] + " has been clicked");
+				});
+
+				$('#small-placebox-map-icon-' + val['ID']).click(function(event) {
+					console.log(val['ID'] + " map icon has been clicked");
+				});
+
+			});
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function(){
+			fetchingMoreData = false;
+		});		
 	}
 
 	this.fillGuides = function(){
@@ -453,6 +481,17 @@ function controller(){
 				$("#header").addClass('scroll');
 			}else{
 				$("#header").removeClass('scroll');
+			}
+
+			scroll = $('#places-container').height() - $('#places').height() - $('main').scrollTop();
+
+			if(scroll < 300 && fetchingMoreData == false){
+
+				fetchingMoreData = true;
+
+				if(view.getCurrentView() == "places"){
+					controller.fillPlaces();
+				}
 			}
 		});
 

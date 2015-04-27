@@ -122,17 +122,18 @@ class UserAPI extends CoreAPI {
 
             if(strlen($username) == 0){
                 return $this->errorUsernameRequired();
-            }else{
-                return $this->errorUsernameRequired();
-    		}
-
-    		if(array_key_exists("phrase", $_POST)){
-    			$password = $_POST["phrase"];
-
-    			if(strlen($password) == 0){
-                    return $this->errorPasswordRequired();
-    			}
             }
+
+        }else{
+            return $this->errorUsernameRequired();
+		}
+
+    	if(array_key_exists("phrase", $_POST)){
+    		$password = $_POST["phrase"];
+
+			if(strlen($password) == 0){                    
+                return $this->errorPasswordRequired();
+    		}
         }else{
             return $this->errorPasswordRequired();
         }

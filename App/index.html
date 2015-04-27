@@ -148,12 +148,12 @@
 	</main>
 </body>
 <script id="place-template" type="text/x-handlebars-template">
-	<div class="box placebox">
-		<a href="#">
+	<div class="box placebox" placeID="{{id}}">
+		<a href="#" class="small-placebox-{{id}}">
 			<img src="{{src}}" alt="Image of {{title}}">
 		</a>
-		<a href="#" class="icon locationIcon"></a>
-		<a href="#">
+		<a href="#" class="icon locationIcon" id="small-placebox-map-icon-{{id}}"></a>
+		<a href="#" class="small-placebox-{{id}}">
 			<div class="info clearfix">
 				<h2>{{title}}</h2>
 				<p>{{short_des}}</p>

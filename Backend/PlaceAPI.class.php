@@ -20,8 +20,10 @@ class PlaceAPI extends CoreAPI {
     }
     
     protected function processGET() {
-        if ($this->request === "getPlaces") {
-            return $this->getPlaces();
+        if ($this->request === "getPlacesArea") {
+            return $this->getPlacesArea();
+        } elseif ($this->request === "getPlacesPoint") {
+            return $this->getPlacesPoint();
         }
         
         return parent::processGET();
@@ -64,8 +66,50 @@ class PlaceAPI extends CoreAPI {
         
         return $this->successPlaceAdded();
     }
+
+    private function getPlacesPoint() {
+
+        if (array_key_exists("lat", $_GET)) {
+            $lat = $_GET["lat"];
+        } else {
+            return $this->error("latitude parameter is required");
+        }
+        
+        if (array_key_exists("long", $_GET)) {
+            $long = $_GET["long"];
+        } else {
+            return $this->error("longitude parameter is required");
+        }
+
+        if (array_key_exists("offset", $_GET)) {
+            $offset = $_GET["offset"];
+        } else {
+            return $this->error("Offset parameter is required");
+        }
+
+        include_once('sqlHandler/dbconnector.php');
+        $DB = new DBPDO();
+        
+        $found = 0;
+        $distance = 25;
+
+        while ($found + $offset < 10 + $offset) {
+            $result = $DB->fetchAll("SELECT *, ( 3959 * acos( cos( radians(?) ) * cos( radians( lat_coord ) ) * cos( radians( long_coord ) - radians(?) ) + sin( radians(?) ) * sin( radians( lat_coord ) ) ) ) AS distance FROM Places HAVING distance < ? ORDER BY distance LIMIT {$offset}, 10",
+                array($lat, $long, $lat, $distance));
+
+            $found = count($result);
+            $distance = $distance * 2;
+            if($distance > 100){
+                if( $found === 0)
+                    return json_encode($result);
+                return $this->noPlacesNearby();
+            }
+        }
+
+        return json_encode($result);
+    }
     
-    private function getPlaces() {
+    private function getPlacesArea() {
         if (array_key_exists("tl_lat", $_GET)) {
             $tl_lat = $_GET["tl_lat"];
         } else {
@@ -75,7 +119,7 @@ class PlaceAPI extends CoreAPI {
         if (array_key_exists("tl_long", $_GET)) {
             $tl_long = $_GET["tl_long"];
         } else {
-            return $this->error("Top-left longitude parameter is reuqired");
+            return $this->error("Top-left longitude parameter is required");
         }
         
         if (array_key_exists("br_lat", $_GET)) {
@@ -87,7 +131,7 @@ class PlaceAPI extends CoreAPI {
         if (array_key_exists("br_long", $_GET)) {
             $br_long = $_GET["br_long"];
         } else {
-            return $this->error("Bottom-right longitude parameter is reuqired");
+            return $this->error("Bottom-right longitude parameter is required");
         }
         
         if (array_key_exists("offset", $_GET)) {
@@ -161,6 +205,16 @@ class PlaceAPI extends CoreAPI {
         $success = [
             "error" => false,
             "reply" => "Place has successfully been added"
+        ];
+        
+        return json_encode($success);
+    }
+
+    private function noPlacesNearby(){
+        $success = [
+            "error" => false,
+            "noPlaces" => true,
+            "reply" => "No Places found nearby"
         ];
         
         return json_encode($success);
