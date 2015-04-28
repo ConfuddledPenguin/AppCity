@@ -7,6 +7,8 @@ var directionsDisplay;
 var pos;
 // var directionsCanvas = document.getElementById('directions-canvas').style.visibility="hidden";
 var Add_marker;
+var pos_callback;
+
 function Map_initialize() {
   var mapOptions = {
     zoom: 12,
@@ -22,6 +24,9 @@ directionsDisplay.setPanel(document.getElementById('directions-canvas'));
     navigator.geolocation.getCurrentPosition(function(position) {
       pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
+      if (typeof pos_callback !== 'undefined') {
+          pos_callback();
+      }
 
       var infowindow = new google.maps.InfoWindow({
         map: map,
@@ -140,6 +145,9 @@ function handleNoGeolocation(errorFlag) {
     var content = 'Error: Your browser doesn\'t support geolocation.';
   }
   pos = new google.maps.LatLng(55.861,-4.2435);
+  if (typeof pos_callback !== 'undefined') {
+          pos_callback();
+  }
   var options = {
     map: map,
     position: pos,
