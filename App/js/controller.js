@@ -26,6 +26,18 @@ function controller(){
 			localStorage.setItem(localStorageBase + "username", username);
 		}
 
+		controller.getUserStats();
+
+		if(view.getCurrentView() == "login"){
+			view.toggleView("#user", user.getUserName());
+			view.toggleMenu(); //need to suppress the menu opening
+		}
+
+		view.changeText("#menu-User", user.getUserName());
+	};
+
+	this.getUserStats = function(){
+
 		$.ajax({
 			url: apiBase + "User?request=getUserInfo",
 			type: 'GET',
@@ -39,6 +51,7 @@ function controller(){
 
 				$.each(response, function(key, val) {
 					 user.addUserData(key, val);
+					 console.log("key" + key + " val " + val);
 				});
 
 				$("#userUsername").text(user.getUserName());
@@ -52,13 +65,7 @@ function controller(){
 			view.showMessage("Error: getting user info");
 		});
 
-		if(view.getCurrentView() == "login"){
-			view.toggleView("#user", user.getUserName());
-			view.toggleMenu(); //need to suppress the menu opening
-		}
-
-		view.changeText("#menu-User", user.getUserName());
-	};
+	}
 
 	this.showUserStats = function(){
 
@@ -71,9 +78,9 @@ function controller(){
 		var html = template(context);
 		$("#userStats").append(html);
 
-		var context = {title: "Locations Modified", value: user.getUserData("Locations_Modified")};
-		var html = template(context);
-		$("#userStats").append(html);
+		// var context = {title: "Locations Modified", value: user.getUserData("Locations_Modified")};
+		// var html = template(context);
+		// $("#userStats").append(html);
 
 		var context = {title: "Locations Rated", value: user.getUserData("Locations_Rated")};
 		var html = template(context);
@@ -83,9 +90,9 @@ function controller(){
 		var html = template(context);
 		$("#userStats").append(html);
 
-		var context = {title: "Guides Modified", value: user.getUserData("Guides_Modified")};
-		var html = template(context);
-		$("#userStats").append(html);
+		// var context = {title: "Guides Modified", value: user.getUserData("Guides_Modified")};
+		// var html = template(context);
+		// $("#userStats").append(html);
 
 		var context = {title: "Guides Rated", value: user.getUserData("Guides_Rated")};
 		var html = template(context);
@@ -95,9 +102,9 @@ function controller(){
 		var html = template(context);
 		$("#userStats").append(html);
 
-		var context = {title: "Events Modified", value: user.getUserData("Events_Modified")};
-		var html = template(context);
-		$("#userStats").append(html);
+		// var context = {title: "Events Modified", value: user.getUserData("Events_Modified")};
+		// var html = template(context);
+		// $("#userStats").append(html);
 
 		var context = {title: "Events Rated", value: user.getUserData("Events_Rated")};
 		var html = template(context);
@@ -306,6 +313,7 @@ function controller(){
 
 			if(user != null){
 				view.toggleView("#user", user.getUserName());
+				controller.getUserStats();
 			}else{
 				view.toggleView("#login", "Login");
 			}
@@ -450,13 +458,12 @@ function controller(){
 			})
 			.fail(function() {
 				view.showMessage("Fiddlesticks. I have gone wrong, sorry about that...");
-			})
+			});
 			
-		
 		})
 		.fail(function() {
 			view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
-		})
+		});
 	}
 
 	this.fillPlaces = function(){

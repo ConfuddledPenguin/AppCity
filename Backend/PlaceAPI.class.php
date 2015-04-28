@@ -74,7 +74,7 @@ class PlaceAPI extends CoreAPI {
         $DB = new DBPDO();
         $DB->execute("INSERT INTO Places(Name,Short_des,Lat_coord,Long_coord,Long_des,Address,Image,Link,Phone) VALUES (?,?,?,?,?,?,?,?,?)", array($name,$short_desc,$lat,$long,$long_desc,$address,$imageURL,$link,$phone));
         
-        $DB->execute("UPDATE User_Stats SET Places_Added = Places_Added+1 WHERE Username = ?", array($Username));
+        $DB->execute("UPDATE User_Stats SET Locations_Added = Locations_Added+1 WHERE Username = ?", array($Username));
 
         return $this->successPlaceAdded();
     }
@@ -222,7 +222,7 @@ class PlaceAPI extends CoreAPI {
         $DB->execute("UPDATE Places SET Av_Rating = (SELECT AVG(Rating) FROM Place_Ratings WHERE Place_ID = ?) WHERE ID = ?",array($place_id,$place_id));
         $result = $DB->fetch("SELECT ID, Av_Rating FROM Places WHERE ID = ?",array($place_id));
 
-        $DB->execute("UPDATE User_Stats SET Places_Rated = Places_Rated+1 WHERE Username = ?", array($username));
+        $DB->execute("UPDATE User_Stats SET Locations_Rated = Locations_Rated + 1 WHERE Username = ?", array($username));
         
         return json_encode($result);
     }

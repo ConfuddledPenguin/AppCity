@@ -64,7 +64,21 @@ class UserAPI extends CoreAPI {
         
         include_once("sqlHandler/dbconnector.php");
         $result = $DB->fetch("SELECT * FROM User_Stats WHERE Username =?", array($username));
+
+        $total = 0;
+        foreach ($result as $key => $value) {
+
+            if($key === "Community_Rating" || $key === "Username"){
+
+            }else{
+
+                $total = $total +  $value;
+            }
+        }
+
+        $DB->execute("UPDATE User_Stats SET Community_Rating = ? WHERE Username = ?", array($total, $username));
         
+        $result = $DB->fetch("SELECT * FROM User_Stats WHERE Username =?", array($username));
         if ($result === false) {
             return $this->errorUsernameInvalid($username);
         } else {
