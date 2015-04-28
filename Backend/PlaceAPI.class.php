@@ -24,6 +24,8 @@ class PlaceAPI extends CoreAPI {
             return $this->getPlacesArea();
         } elseif ($this->request === "getPlacesPoint") {
             return $this->getPlacesPoint();
+        } elseif ($this->request === "getPlace"){
+            return $this->getPlace();
         }
         
         return parent::processGET();
@@ -65,6 +67,22 @@ class PlaceAPI extends CoreAPI {
         $DB->execute("INSERT INTO Places(Name,Short_des,Lat_coord,Long_coord,Long_des,Address,Image,Link,Phone) VALUES (?,?,?,?,?,?,?,?,?)", array($name,$short_desc,$lat,$long,$long_desc,$address,$imageURL,$link,$phone));
         
         return $this->successPlaceAdded();
+    }
+
+    private function getPlace(){
+
+        if (array_key_exists("ID", $_GET)) {
+            $ID = $_GET["ID"];
+        } else {
+            return $this->error("Place ID parameter is required");
+        }
+
+        include_once("sqlHandler/dbconnector.php");
+        $DB = new DBPDO();
+        $result = $DB->fetch("SELECT * FROM Places WHERE ID = ?", array($ID)); 
+        
+        return json_encode($result);       
+
     }
 
     private function getPlacesPoint() {

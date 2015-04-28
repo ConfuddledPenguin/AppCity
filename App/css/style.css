@@ -284,9 +284,9 @@ header {
   margin-bottom: 1rem;
   padding: 0.5rem;
   background: white;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
+  -webkit-box-shadow: 0px 0px 5px 0px black;
+  -moz-box-shadow: 0px 0px 5px 0px black;
+  box-shadow: 0px 0px 5px 0px black; }
   .box h2 {
     font-size: 1.4rem;
     padding-bottom: 0.4rem; }
@@ -316,6 +316,74 @@ header {
  *
  * This is the style for the places section
  */
+#places .place-large-display {
+  position: fixed;
+  bottom: 0;
+  height: calc(100% - 3.25rem);
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2); }
+  #places .place-large-display .display-box {
+    margin: 0.8rem 0.6rem;
+    background: white; }
+#places .display-box {
+  padding: 0; }
+  #places .display-box a, #places .display-box a:visited {
+    color: black; }
+  #places .display-box img {
+    width: 100%;
+    height: 6rem; }
+  #places .display-box .info {
+    padding: 0.5rem; }
+  #places .display-box .locationIcon {
+    position: relative; }
+  #places .display-box .locationIcon:before {
+    position: relative;
+    float: right;
+    top: -1.5rem;
+    left: -1rem; }
+  #places .display-box .details, #places .display-box .close {
+    border-top: 1px solid #e5e5e5;
+    line-height: 1.4rem; }
+    #places .display-box .details p, #places .display-box .details a, #places .display-box .close p, #places .display-box .close a {
+      display: block;
+      padding: 0.4rem 0.5rem; }
+    #places .display-box .details #phone:before, #places .display-box .details #link:before, #places .display-box .details #address:before, #places .display-box .close #phone:before, #places .display-box .close #link:before, #places .display-box .close #address:before {
+      font-family: icomoon;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale; }
+    #places .display-box .details #address:before, #places .display-box .close #address:before {
+      content: "\e947"; }
+    #places .display-box .details #phone:before, #places .display-box .close #phone:before {
+      content: "\e942"; }
+    #places .display-box .details #link:before, #places .display-box .close #link:before {
+      content: "\e9cb"; }
+  #places .display-box .rating {
+    border-top: 1px solid #e5e5e5; }
+    #places .display-box .rating p:first-of-type {
+      color: red;
+      font-size: 3rem;
+      padding-left: 1rem;
+      float: left; }
+    #places .display-box .rating p:nth-of-type(4n+2) {
+      position: relative;
+      top: 1.7rem;
+      font-size: 1.5rem; }
+    #places .display-box .rating p:last-of-type {
+      padding: 0.3rem 0 0 3.5rem; }
+  #places .display-box .close {
+    padding: 1rem 0; }
+    #places .display-box .close button {
+      display: block;
+      color: white;
+      border: none;
+      width: 80%;
+      margin: 0.5rem;
+      background: red;
+      height: 2rem;
+      font-size: 1.3rem;
+      margin: auto;
+      outline: none; }
+
 /* 
  * This is the style sheet for the ###COME UP WITH AWESOME NAME header
  * 

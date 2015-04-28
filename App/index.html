@@ -73,6 +73,11 @@
 			<div class="container" id="places-container">
 				
 			</div>
+			<div class="place-large-display noDisplay">
+				<div class="display-box">
+					
+				</div>
+			</div>
 		</section>
 		<section id="guides" class="noDisplay">
 			<div class="container" id="guide-container">
@@ -202,8 +207,31 @@
 		<p>{{value}}</p>
 	</div>
 </script>
+<script id="place-large-template" type="text/x-handlebars-template">
+	<div class="box display-box" placeID="{{id}}">
+		<img src="{{src}}" alt="Image of {{title}}">
+		<a href="#" class="icon locationIcon" id="large-placebox-map-icon-{{id}}"></a>
+		<div class="info clearfix">
+			<h2>{{title}}</h2>
+			<p>{{short_des}}</p>
+		</div>
+		<div class="details">
+			<p id="address">{{address}}</p>
+			<p id="phone">{{phone}}</p>
+			<a id="link" href="{{link}}">{{link}}</a>
+		</div>
+		<div class="rating clearfix">
+			<p>{{rating}}</p>
+			<p>/</p>
+			<p>10</p>
+		</div>
+		<div class="close">
+			<button id="close-large-place">Close</button>
+		</div>
+	</div>
+</script>
+<script src="js/MapCode.js"></script>
 <script src="js/userClass.js"></script>
 <script src="js/view.js"></script>
 <script src="js/controller.js"></script>
-<script src="js/MapCode.js"></script>
 </html>

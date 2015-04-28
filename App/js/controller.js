@@ -327,6 +327,55 @@ function controller(){
 		});
 	};
 
+	this.displayPlace = function(id){
+
+		$(".place-large-display").removeClass('noDisplay');
+		$(".place-large-display").text("");
+
+		var sauce = $("#place-large-template").html();
+		var template = Handlebars.compile(sauce);		
+
+		$.ajax({
+			url: apiBase + 'Place?request=getPlace',
+			type: 'GET',
+			data: {ID: id},
+		})
+		.done(function(result) {
+			
+			if(result['error']){
+				if (result['error'] == true){
+					alert("Fiddlesticks, I have gone wrong, sorry about that...");
+				}
+			}
+
+			var context = {
+				title: result['Name'], short_des: result['Short_des'], src: result['Image'],
+				phone: result['Phone'], link: result['Link'], id: result['ID'],
+				address: result['Address'], rating: result['Av_Rating'], 
+			};
+			var html = template(context);
+
+			$(".place-large-display").append(html);
+
+			$("#close-large-place").click(function(event) {
+				$(".place-large-display").addClass('noDisplay');
+			});
+
+			$("#large-placebox-map-icon-"+result['ID']).click(function(event) {
+				console.log("Map Icon clicked");
+			});
+
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+
+	}
+
 	this.fillPlaces = function(){
 
 		var sauce = $("#place-template").html();
@@ -362,8 +411,6 @@ function controller(){
 			placesFetched += count;
 
 			$.each(result, function(index, val) {
-				
-				console.log(val);
 
 				place = val;
 
@@ -373,6 +420,7 @@ function controller(){
 
 				$('.small-placebox-' + val['ID']).click(function(event) {
 					console.log(val['ID'] + " has been clicked");
+					controller.displayPlace(val['ID']);
 				});
 
 				$('#small-placebox-map-icon-' + val['ID']).click(function(event) {

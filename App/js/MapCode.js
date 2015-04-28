@@ -5,7 +5,7 @@ var Marks;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay;
 var pos;
-var directionsCanvas = document.getElementById('directions-canvas').style.visibility="hidden";
+// var directionsCanvas = document.getElementById('directions-canvas').style.visibility="hidden";
 var Add_marker;
 function Map_initialize() {
   var mapOptions = {
