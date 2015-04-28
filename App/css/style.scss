@@ -90,6 +90,30 @@ p{
 	border-radius: 5rem;
 }
 
+.message{
+	position: fixed;
+	bottom: 1rem;
+	left: 10%;
+	width: 80%;
+	background: #282828;
+	color: white;
+	border-radius: 5rem;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s 1s, opacity 1s linear;
+	
+
+	p{
+		text-align: center;
+	}
+}
+
+.messageVisable{
+	visibility: visible;
+	opacity: 1;
+	transition: opacity 1s linear;
+}
+
 @include main-fade-keyframes(1, 0.8);
 .fade-out{
 	@include animation(mainfade, 0.5s, ease, forwards);

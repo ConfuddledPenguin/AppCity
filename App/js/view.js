@@ -94,6 +94,17 @@ function viewStuff(controller){
 		$(id).text(text);
 	}
 
+	this.showMessage = function(text){
+		$("#message-text").text(text);
+		$(".message").addClass('messageVisable');
+
+		setTimeout(this.hideMessage, 2000);
+	}
+
+	this.hideMessage = function(){
+		$(".message").removeClass('messageVisable');		
+	}
+
 	this.init();
 
 }

@@ -66,6 +66,25 @@ p {
   padding: 0.5rem;
   border-radius: 5rem; }
 
+.message {
+  position: fixed;
+  bottom: 1rem;
+  left: 10%;
+  width: 80%;
+  background: #282828;
+  color: white;
+  border-radius: 5rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s linear; }
+  .message p {
+    text-align: center; }
+
+.messageVisable {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 1s linear; }
+
 @-webkit-keyframes mainfade {
   0% {
     opacity: 1; }

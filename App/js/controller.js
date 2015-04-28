@@ -34,7 +34,7 @@ function controller(){
 		.done(function(response) {
 
 			if(response["error"]){
-				alert("fail");
+				view.showMessage("Error: Server has returned rubbish");
 			}else{
 
 				$.each(response, function(key, val) {
@@ -49,7 +49,7 @@ function controller(){
 			}
 		})
 		.fail(function(response) {
-			alert("Error getting user info");
+			view.showMessage("Error: getting user info");
 		});
 
 		if(view.getCurrentView() == "login"){
@@ -115,6 +115,7 @@ function controller(){
 		}
 
 		view.changeText("#menu-User", "Log In");
+		view.showMessage("User logged out");
 
 	};
 
@@ -133,24 +134,20 @@ function controller(){
 		})
 		.done(function(data) {
 
-			console.log(data);
-
-			console.log("error " + data["error"]);
-
 			if(data["error"] == true){
 				alert("Error logging user in");
 			}
 
 			if(data["loggedin"] == false)
-				alert(data["reply"]);
+				view.showMessage(data['reply']);
 			else if(data["loggedin"] == true){
-				alert(data["reply"]);
+				view.showMessage(data["reply"]);
 				controller.handleLoggedIn(username, data["auth"]);
 			}
 
 		})
 		.fail(function() {
-			console.log("Fiddlesticks I have gone wrong, sorry about that...");
+			view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
 		});
 
 	}
@@ -170,25 +167,20 @@ function controller(){
 			})
 			.done(function(data) {
 
-				console.log(data);
-
-				console.log("error " + data["error"]);
-
 				if(data["error"] == true){
-					alert("Error Creating user");
+					view.showMessage("Error Creating user");
 				}
 
 				if(data["loggedin"] == false)
-					alert("DEAL WITH LOG IN FAIL");
+					view.showMessage("Error: log in failed");
 				else if(data["loggedin"] == true){
-					alert(data["reply"]);
+					view.showMessage(data["reply"]);
 					controller.handleLoggedIn(username, data["auth"]);
 				}
 
 			})
 			.fail(function(data) {
-				alert("Fiddlesticks I have gone wrong, sorry about that...");
-				console.log(data);
+				view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
 			});
 	}
 
@@ -202,19 +194,18 @@ function controller(){
 		.done(function(result) {
 			
 			if(result["error"] === true){
-				alert("Error Logging out user");
+				view.showMessage("Error logging out user");
 			}
 
 			if(result["loggedout"] === true){
-				alert("User logged out");
+				view.showMessage("User logged out");
 			}
 
 			controller.handleLoggedOut();
 
 		})
 		.fail(function(result) {
-			alert("Fiddlesticks I have gone wrong, sorry about that...");
-				console.log(result);
+			view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
 		});
 	};
 
@@ -284,7 +275,7 @@ function controller(){
 			}
 		})
 		.fail(function() {
-			alert("Fiddlesticks I have gone wrong, sorry about that...");
+			view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
 		});	
 
 	}
@@ -344,7 +335,7 @@ function controller(){
 			
 			if(result['error']){
 				if (result['error'] == true){
-					alert("Fiddlesticks, I have gone wrong, sorry about that...");
+					view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
 				}
 			}
 
@@ -367,13 +358,8 @@ function controller(){
 
 		})
 		.fail(function() {
-			console.log("error");
+			view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
 		})
-		.always(function() {
-			console.log("complete");
-		});
-		
-
 	}
 
 	this.fillPlaces = function(){
@@ -390,7 +376,7 @@ function controller(){
 
 			if(result["error"]){
 				if(result["error"] == true){
-					alert("Fiddlesticks, I have gone wrong, sorry about that...");
+					view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
 					return;
 				}
 			}
@@ -398,7 +384,7 @@ function controller(){
 			if(result["noPlaces"]){
 				if(result["noPlaces"] == true){
 					if(placesFetched == 0){
-						alert("Sorry no places nearby, try adding some?");
+						view.showMessage("Sorry no places nearby, try adding some?");
 					}
 					return;
 				}
@@ -430,7 +416,7 @@ function controller(){
 			});
 		})
 		.fail(function() {
-			console.log("error");
+			view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");
 		})
 		.always(function(){
 			fetchingMoreData = false;
@@ -563,7 +549,7 @@ function controller(){
  					alert("Fiddlesticks");
  				}else{
  					if(response["loggedin"] == true){
- 						alert("User Logged In");
+ 						view.showMessage("User Logged In");
  						controller.handleLoggedIn(username, auth);
  					}else{
  						alert("Need to log in");
@@ -572,7 +558,7 @@ function controller(){
 
  			})
  			.fail(function() {
- 				console.log("error validating user");
+ 				view.showMessage("Error: Cant reach server, for user validation");
  			});
  			
     	}
