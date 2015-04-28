@@ -5,7 +5,7 @@
 function controller(){
 
 	var view = new viewStuff(this);
-	var localStorageBase = "uk.ac.strath.devweb2014.cs317.group17."
+	var localStorageBase = "uk.ac.strath.devweb2014.cs317.group17.";
 	var apiBase = "https://devweb2014.cis.strath.ac.uk/~gvb12182/CS317/AppCity/api/v1/";
 	var auth = '';
 	var controller = this;
