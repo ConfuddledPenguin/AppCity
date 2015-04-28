@@ -3,10 +3,13 @@ var map;
 var markers = [];
 var markers_ID = [];
 var markers_Info  = [];
+var markers_InfoWindow = [];
 var Marks;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay;
 var pos;
+var templatLng;
+
 // var directionsCanvas = document.getElementById('directions-canvas').style.visibility="hidden";
 var Add_marker;
 
@@ -61,7 +64,7 @@ function AddMarkerManually(Marker) {
  var contentString = 
                       '<div  "class="box placebox" placeid="1">'+
                         '<a  href="#" class="small-placebox-1">'+
-                          '<img =  src="'+Marker["Image"]+'" alt="Image of Place 2" '+
+                          '<img =  src="'+Marker["Image"]+'" alt="Image of '+Marker["Name"]+'" width="100%" height="17%"'+
                         '</a>'+
                         '<a href="#" class="small-placebox-1">'+
                           '<div  class="info clearfix">'+
@@ -71,34 +74,84 @@ function AddMarkerManually(Marker) {
                         '</a>'+
                       '</div>';
 
-    var iw1 = new google.maps.InfoWindow({
+     markers_InfoWindow[Marker["ID"]]= new google.maps.InfoWindow({
        content: contentString
      });
-     google.maps.event.addListener(marker, "click", function (e) { 
-        iw1.open(map, this); 
-        console.log(e);
-      });
+     google.maps.event.addListener(marker, "click", function (e) {  markers_InfoWindow[Marker["ID"]].open(map, this); });
      google.maps.event.addListener(marker, "dblclick", function (e) {calcRoute(pos, LatLng);  });
    markers_ID.push(Marker["ID"])
    markers_Info[Marker["ID"]] = Marker;
    markers[Marker["ID"]] = marker;
 }
 
+function submitbutton(){
+
+
+
+var localStorageBase = "uk.ac.strath.devweb2014.cs317.group17.";
+
+
+var data2 ={
+name: document.getElementById('NameField').value,
+short_desc: document.getElementById('Short_desField').value,
+lat: templatLng["k"],
+long: templatLng["D"],
+auth: localStorage.getItem( localStorageBase + "auth")
+      };
+console.log(data2);
+$.ajax({
+      url: apiBase2 + 'Place?request=addPlace',
+      type: 'GET',
+      data: data2 })
+
+    .done(function(result) {
+      console.log(result);
+      if(result["error"]){
+        if(result["error"] == true){
+          alert("Fiddlesticks, I have gone wrong, sorry about that...");
+          return;
+        }
+      }
+
+      if(result["noPlaces"]){
+        if(result["noPlaces"] == true){
+          if(placesFetched2 == 0){
+            alert("Sorry no places nearby, try adding some?");
+          }
+          return;
+        }
+      }
+
+
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function(){
+      fetchingMoreData = false;
+    });   
+
+document.getElementById('directions-canvas').innerHTML = " ";
+}
+
 
 function AddMarker() {
 	 var listener1 = google.maps.event.addListener(map, 'click', function(event) { 
+templatLng = event.latLng;
+console.log(templatLng);
+    var AddLocations =  '<div id="AddLocations" class="box">'+
+                    '<textarea class="loginInput" id="NameField" type="text" name="Name" text="Name"placeholder="Place Name"></textarea>'+
+                    '<textarea class="loginInput" id="Short_desField" type="text" name="Short_des" text="Short_des"placeholder="Description"></textarea>'+
+                    '<br><button id="submitbutton" type="submit" name="submit">Submit</button>'+
+                    '</div>';
 
-    Add_marker = new google.maps.Marker({
-    position: event.latLng,
-    map: map,
-    draggable:false,
-    title: ''
-  });
+
+    document.getElementById('directions-canvas').innerHTML = AddLocations;
+    document.getElementById('submitbutton').addEventListener("click", submitbutton);
+  
     google.maps.event.removeListener(listener1);
-     google.maps.event.addListener(Add_marker, "dblclick", function (e) {calcRoute(pos,  event.latLng);  });
-     
 
-    markers.push(Add_marker);
+     
 });
 }
 
@@ -121,7 +174,7 @@ function handleNoGeolocation(errorFlag) {
   var infowindow = new google.maps.InfoWindow(options);
   map.setCenter(options.position);
 
-   /*AddMarker();*/
+  
 } 
 
 function getBounds(){
@@ -266,94 +319,7 @@ function addPlacesInArea(){
           return;
         }
       }
-result.push({ ID: "43",
-                          Name: "gfhbfgb",
-                          Short_des: "grgsdbfgsv4444rgdr",
-                          Long_des: "bvstfgbhfdbstgdrsfgre",
-                          Av_Rating: "434234",
-                          Lat_coord: "55.81144851119163",
-                          Long_coord: "-4.316465440624988",
-                          Address: "h65364h536h35",
-                          Image: "http://animalia-life.com/data_images/cat/cat4.jpg",
-                          Link: "http://animalia-life.com/data_images/cat",
-                          Phone: "h56h536h53tttt"})
-result.push({ ID: "33",
-                          Name: "vsfgbvfdvdasvsdrg",
-                          Short_des: "aef",
-                          Long_des: "bvstfgbhfdbstgdrsfgre",
-                          Av_Rating: "434234",
-                          Lat_coord: "55.82144451119163",
-                          Long_coord: "-4.326464440624988",
-                          Address: "h65364h536h35",
-                          Image: "http://animalia-life.com/data_images/cat/cat3.jpg",
-                          Link: "http://animalia-life.com/data_images/cat",
-                          Phone: "h56h536h53tttt"})
-result.push({ ID: "23",
-                          Name: "faefae",
-                          Short_des: "23r23",
-                          Long_des: "bvstfgbhfdbstgdrsfgre",
-                          Av_Rating: "434234",
-                          Lat_coord: "55.83144751119163",
-                          Long_coord: "-4.336475440624988",
-                          Address: "h65364h536h35",
-                          Image: "http://animalia-life.com/data_images/cat/cat2.jpg",
-                          Link: "http://animalia-life.com/data_images/cat",
-                          Phone: "h56h536h53tttt"})
-result.push({ ID: "13",
-                          Name: "vsfgbsdsfr3243drg",
-                          Short_des: "grgsdf34rf1324f34rgdr",
-                          Long_des: "bvstfgbhfdbstgdrsfgre",
-                          Av_Rating: "434234",
-                          Lat_coord: "55.84144151119163",
-                          Long_coord: "-4.346415440624988",
-                          Address: "h65364h536h35",
-                          Image: "http://animalia-life.com/data_images/cat/cat1.jpg",
-                          Link: "http://animalia-life.com/data_images/cat",
-                          Phone: "h56h536h53tttt"})
-result.push({ ID: "134",
-                          Name: "vsfgbsdsfr3243drg",
-                          Short_des: "grgsdf34rf1324f34rgdr",
-                          Long_des: "bvstfgbhfdbstgdrsfgre",
-                          Av_Rating: "434234",
-                          Lat_coord: "55.12744151119163",
-                          Long_coord: "-4.177415440624988",
-                          Address: "h65364h536h35",
-                          Image: "http://animalia-life.com/data_images/cat/cat1.jpg",
-                          Link: "http://animalia-life.com/data_images/cat",
-                          Phone: "h56h536h53tttt"})
-result.push({ ID: "43",
-                          Name: "vsfgbsdsfr3243drg",
-                          Short_des: "grgsdf34rf1324f34rgdr",
-                          Long_des: "bvstfgbhfdbstgdrsfgre",
-                          Av_Rating: "434234",
-                          Lat_coord: "55.12544151119163",
-                          Long_coord: "-4.124415440624988",
-                          Address: "h65364h536h35",
-                          Image: "http://animalia-life.com/data_images/cat/cat1.jpg",
-                          Link: "http://animalia-life.com/data_images/cat",
-                          Phone: "h56h536h53tttt"})
-result.push({ ID: "73",
-                          Name: "vsfgbsdsfr3243drg",
-                          Short_des: "grgsdf34rf1324f34rgdr",
-                          Long_des: "bvstfgbhfdbstgdrsfgre",
-                          Av_Rating: "434234",
-                          Lat_coord: "55.12644151119163",
-                          Long_coord: "-4.117415440624988",
-                          Address: "h65364h536h35",
-                          Image: "http://animalia-life.com/data_images/cat/cat1.jpg",
-                          Link: "http://animalia-life.com/data_images/cat",
-                          Phone: "h56h536h53tttt"})
-result.push({ ID: "42",
-                          Name: "vsfgbsdsfr3243drg",
-                          Short_des: "grgsdf34rf1324f34rgdr",
-                          Long_des: "bvstfgbhfdbstgdrsfgre",
-                          Av_Rating: "434234",
-                          Lat_coord: "55.12444151119163",
-                          Long_coord: "-4.122415440624988",
-                          Address: "h65364h536h35",
-                          Image: "http://animalia-life.com/data_images/cat/cat1.jpg",
-                          Link: "http://animalia-life.com/data_images/cat",
-                          Phone: "h56h536h53tttt"})
+
       var count = 0;
       $.each(result, function(index, val) {
 
@@ -396,7 +362,15 @@ result.push({ ID: "42",
   }
 
 
-
+function GoToID(ID) {
+    ID = parseInt(ID);
+     console.log(ID);
+    if (markers_ID.indexOf(ID)>=0) {
+        markers_InfoWindow[ID].open(map, markers[ID]);
+        map.setCenter(markers[ID].getPosition());
+        map.setZoom(15);
+    };
+}
 
 
 

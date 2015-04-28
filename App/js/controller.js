@@ -520,6 +520,8 @@ function controller(){
 
 				$('#small-placebox-map-icon-' + val['ID']).click(function(event) {
 					console.log(val['ID'] + " map icon has been clicked");
+					GoToID(val['ID']);
+					view.toggleView("#explore", "Explore");
 				});
 
 			});
