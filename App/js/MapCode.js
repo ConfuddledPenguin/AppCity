@@ -101,7 +101,7 @@ auth: localStorage.getItem( localStorageBase + "auth")
 console.log(data2);
 $.ajax({
       url: apiBase2 + 'Place?request=addPlace',
-      type: 'GET',
+      type: 'POST',
       data: data2 })
 
     .done(function(result) {

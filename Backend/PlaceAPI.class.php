@@ -66,7 +66,7 @@ class PlaceAPI extends CoreAPI {
         
         $Username = $this->getUsername($_POST["auth"]);
 
-        if($Username["error"]){
+        if(! is_String($Username)){
             return $Username;
         }
 
