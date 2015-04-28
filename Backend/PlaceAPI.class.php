@@ -60,7 +60,7 @@ class PlaceAPI extends CoreAPI {
         
         $long_desc = array_key_exists("long_desc", $_POST) ? $_POST["long_desc"] : null;
         $address = array_key_exists("address", $_POST) ? $_POST["address"] : null;
-        $imageURL = array_key_exists("imageURL", $_POST) ? $_POST["imageURL"] : null;
+        $imageURL = array_key_exists("imageURL", $_POST) ? $_POST["imageURL"] : ("https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+$lat+","+$long+"&fov=70&key=AIzaSyB6Gc0XW1xBwcIXwnRC3EZt2gP8_yrHwF0");
         $link = array_key_exists("link", $_POST) ? $_POST["link"] : null;
         $phone = array_key_exists("phone", $_POST) ? $_POST["phone"] : null;
         
