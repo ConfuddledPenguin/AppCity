@@ -380,6 +380,11 @@ function controller(){
 
 			$(".star").click(function(event) {
 				
+				if(user === null){
+					view.showMessage("Need to log in first");
+					return;
+				}
+
 				var number = $(this).attr('number');
 
 				$("#user-rating-value").html(number);

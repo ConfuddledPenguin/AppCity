@@ -362,6 +362,8 @@ header {
   width: 100%;
   background: rgba(0, 0, 0, 0.2); }
   #places .place-large-display .display-box {
+    max-height: calc(100% - 1.6rem);
+    overflow-y: auto;
     margin: 0.8rem 0.6rem;
     background: white;
     visibility: hidden;
@@ -394,6 +396,7 @@ header {
       display: block;
       padding: 0.4rem 0.5rem; }
     #places .display-box .details #phone:before, #places .display-box .details #link:before, #places .display-box .details #address:before, #places .display-box .close #phone:before, #places .display-box .close #link:before, #places .display-box .close #address:before {
+      padding-right: 0.5rem;
       font-family: icomoon;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale; }

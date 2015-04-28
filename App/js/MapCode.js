@@ -74,7 +74,10 @@ function AddMarkerManually(Marker) {
     var iw1 = new google.maps.InfoWindow({
        content: contentString
      });
-     google.maps.event.addListener(marker, "click", function (e) { iw1.open(map, this); });
+     google.maps.event.addListener(marker, "click", function (e) { 
+        iw1.open(map, this); 
+        console.log(e);
+      });
      google.maps.event.addListener(marker, "dblclick", function (e) {calcRoute(pos, LatLng);  });
    markers_ID.push(Marker["ID"])
    markers_Info[Marker["ID"]] = Marker;
