@@ -282,6 +282,8 @@ function controller(){
 
 	this.initMenuControl = function(){
 
+		$('#loginbox').trigger('blur');
+
 		$("#menu-icon").click(view.toggleMenu);
 
 		$("#menu-Explore").click(function(){
@@ -310,6 +312,13 @@ function controller(){
 		});
 
 		$("#menu-Settings").click(function(){
+
+			if(user === null){
+				$("#settings-block").removeClass('noDisplay');
+			}else{
+				$("#settings-block").addClass('noDisplay');
+			}
+
 			view.toggleView("#settings", "Settings");
 		});
 
@@ -347,6 +356,8 @@ function controller(){
 			var html = template(context);
 
 			$(".place-large-display").append(html);
+
+			$(".display-box").addClass('display-box-visible');
 
 			$("#close-large-place").click(function(event) {
 				$(".place-large-display").addClass('noDisplay');

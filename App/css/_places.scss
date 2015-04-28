@@ -18,6 +18,16 @@
 		.display-box{
 			margin: 0.8rem 0.6rem;
 			background: white;
+			visibility: hidden;
+			opacity: 0;
+			transition: visibility 0s 5s, opacity 5s linear;
+		}
+
+		.display-box-visible{
+			
+			visibility: visible;
+			opacity: 1;
+			transition: opacity 5s linear;
 		}
 	}
 

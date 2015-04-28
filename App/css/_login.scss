@@ -15,10 +15,17 @@
 		height: calc(100% - 1.6rem);
 	}
 
+	.login-focused{
+ 		top: 0.5rem;
+ 	}
+
  	#loginbox{
  		position: relative;
  		top: 14rem;
+ 		transition: top 0.5s linear;
  	}
+
+ 	
 
 	input, button{
 		display: block;

@@ -327,6 +327,18 @@ header {
     top: -1.5rem;
     left: -1rem; }
 
+.block {
+  position: fixed;
+  bottom: 0;
+  height: calc(100% - 3.25rem);
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75); }
+  .block div {
+    width: 80%;
+    margin: 1rem auto; }
+    .block div p {
+      text-align: center; }
+
 /* 
  * This is the style sheet for the ###COME UP WITH AWESOME NAME header
  * 
@@ -343,7 +355,14 @@ header {
   background: rgba(0, 0, 0, 0.2); }
   #places .place-large-display .display-box {
     margin: 0.8rem 0.6rem;
-    background: white; }
+    background: white;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 5s, opacity 5s linear; }
+  #places .place-large-display .display-box-visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 5s linear; }
 #places .display-box {
   padding: 0; }
   #places .display-box a, #places .display-box a:visited {
@@ -415,9 +434,12 @@ header {
   background-size: cover;
   background-position: top center;
   height: calc(100% - 1.6rem); }
+#login .login-focused {
+  top: 0.5rem; }
 #login #loginbox {
   position: relative;
-  top: 14rem; }
+  top: 14rem;
+  transition: top 0.5s linear; }
 #login input, #login button {
   display: block;
   height: 2rem;

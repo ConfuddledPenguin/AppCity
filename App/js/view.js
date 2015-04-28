@@ -45,6 +45,10 @@ function viewStuff(controller){
 			$('#loginbox').css('top', '0.5rem');
 		});
 
+		$(".loginInput").blur(function(event) {
+			$('#loginbox').css('top', '14rem');
+		});
+
 	}
 
 	/*

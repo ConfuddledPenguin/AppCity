@@ -45,3 +45,22 @@
 		left: -1rem;
 	}
 }
+
+.block{
+
+	position: fixed;
+	bottom: 0;
+	height: calc(100% - 3.25rem);
+	width: 100%;
+	background: rgba(0,0,0,0.75);
+
+	div{
+		width: 80%;
+		margin: 1rem auto;
+
+		p{
+			text-align: center;
+		}
+	}
+
+}
