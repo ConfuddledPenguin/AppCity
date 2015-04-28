@@ -5,7 +5,7 @@
 function controller(){
 
 	var view = new viewStuff(this);
-	var localStorageBase = "uk.ac.strath.devweb2014.cs317.group17."
+	var localStorageBase = "uk.ac.strath.devweb2014.cs317.group17.";
 	var apiBase = "https://devweb2014.cis.strath.ac.uk/~gvb12182/CS317/AppCity/api/v1/";
 	var auth = '';
 	var controller = this;
@@ -335,7 +335,7 @@ function controller(){
 		$.ajax({
 			url: apiBase + 'Place?request=getPlacesPoint',
 			type: 'GET',
-			data: {lat: 55.87, long: -4, offset: placesFetched},
+			data: {lat: pos.lat(), long: pos.lng(), offset: placesFetched},
 		})
 		.done(function(result) {
 
@@ -465,7 +465,9 @@ function controller(){
 		controller.initMenuControl();
 
 		//this should be replaced with actual functionality
-		controller.fillPlaces();
+                pos_callback = function () {
+                    controller.fillPlaces();
+                };
 
 		//this should be replaced with actual functionality
 		controller.fillGuides();
