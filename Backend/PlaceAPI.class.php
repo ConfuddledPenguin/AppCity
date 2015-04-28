@@ -127,7 +127,7 @@ class PlaceAPI extends CoreAPI {
 
             $found = count($result);
             $distance = $distance * 2;
-            if($distance > 100){
+            if($distance > 500){
                 if( $found === 0)
                     return json_encode($result);
                 return $this->noPlacesNearby();

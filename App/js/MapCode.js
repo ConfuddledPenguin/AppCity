@@ -10,7 +10,7 @@ var directionsDisplay;
 var pos;
 var templatLng;
 
-// var directionsCanvas = document.getElementById('directions-canvas').style.visibility="hidden";
+var directionsCanvas = document.getElementById('directions-canvas').style.visibility="hidden";
 var Add_marker;
 
 var apiBase2 = "https://devweb2014.cis.strath.ac.uk/~gvb12182/CS317/AppCity/api/v1/";
