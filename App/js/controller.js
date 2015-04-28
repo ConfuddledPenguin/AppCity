@@ -348,10 +348,13 @@ function controller(){
 				}
 			}
 
+			var userRating = 0;
+
 			var context = {
 				title: result['Name'], short_des: result['Short_des'], src: result['Image'],
 				phone: result['Phone'], link: result['Link'], id: result['ID'],
-				address: result['Address'], rating: result['Av_Rating'], 
+				address: result['Address'], av_rating: result['Av_Rating'],
+				user_rating: userRating, 
 			};
 			var html = template(context);
 
@@ -367,6 +370,89 @@ function controller(){
 				console.log("Map Icon clicked");
 			});
 
+			$(".star").click(function(event) {
+				
+				var number = $(this).attr('number');
+
+				$("#user-rating-value").html(number);
+
+				var stars = $(".submit-rating").children('.star');
+
+				$.each(stars, function(index, star) {
+					 
+					var jstar = $(star);
+
+					if(jstar.attr('number') <= number){
+						jstar.addClass('selected');
+						jstar.html('&#xe9d9;');
+					}else{
+						jstar.removeClass('selected');
+						jstar.html("&#xe9d7;");
+					}
+				});
+
+				var id = $(".place-large-display").children('.display-box').attr('placeid');
+
+				console.log(id);
+
+				$.ajax({
+					url: apiBase + 'Place?request=ratePlace',
+					type: 'POST',
+					data: {place_id: id, auth: user.getUserAuth, rating: number},
+				})
+				.done(function(result) {
+					
+					if(result['error']){
+						view.showMessage("Fiddlesticks. I have gone wrong, sorry about that...");
+					}else{
+						$("#av-rating-value").html(result["Av_Rating"]);
+					}
+
+				})
+				.fail(function() {
+					view.showMessage("Fiddlesticks. I have gone wrong, sorry about that...");
+				})				
+			});
+
+			var id = $(".place-large-display").children('.display-box').attr('placeid');
+
+			$.ajax({
+				url: apiBase + 'Place?request=getRating',
+				type: 'POST',
+				data: {auth: user.getUserAuth(), place_id: id},
+			})
+			.done(function(result) {
+				
+				if(result['error']){
+					view.showMessage("Fiddlesticks. I have gone wrong, sorry about that...");
+				}else{
+
+					var stars = $(".submit-rating").children('.star');
+					var number = result["Rating"];
+
+					$("#user-rating-value").html(number);
+
+					$.each(stars, function(index, star) {
+					 
+						var jstar = $(star);
+
+						if(jstar.attr('number') <= number){
+							jstar.addClass('selected');
+							jstar.html('&#xe9d9;');
+						}else{
+							jstar.removeClass('selected');
+							jstar.html("&#xe9d7;");
+						}
+					});
+
+				}
+
+			})
+			.fail(function() {
+				view.showMessage("Fiddlesticks. I have gone wrong, sorry about that...");
+			})
+			
+		
 		})
 		.fail(function() {
 			view.showMessage("Fiddlesticks I have gone wrong, sorry about that...");

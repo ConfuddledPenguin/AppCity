@@ -229,9 +229,35 @@
 			<a id="link" href="{{link}}">{{link}}</a>
 		</div>
 		<div class="rating clearfix">
-			<p>{{rating}}</p>
-			<p>/</p>
-			<p>10</p>
+			<div class="clearfix">
+				<div class="clearfix av-rating">
+					<p>Average Rating</p>
+					<div>
+						<p>
+						<span id=av-rating-value>{{av_rating}}</span>
+						<span>/</span>
+						<span>5</span>
+						</p>
+					</div>
+				</div>
+				<div class="clearfix user-rating">
+					<p>Your Rating</p>
+					<div>
+						<p>
+						<span id="user-rating-value">{{user_rating}}</span>
+						<span>/</span>
+						<span>5</span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix submit-rating">
+				<p class="star" number="1">&#xe9d7;</p>
+				<p class="star" number="2">&#xe9d7;</p>
+				<p class="star" number="3">&#xe9d7;</p>
+				<p class="star" number="4">&#xe9d7;</p>
+				<p class="star" number="5">&#xe9d7;</p>
+			</div>
 		</div>
 		<div class="close">
 			<button id="close-large-place">Close</button>

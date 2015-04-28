@@ -14,6 +14,8 @@ class PlaceAPI extends CoreAPI {
             return $this->addPlace();
         } elseif ($this->request === "ratePlace") {
             return $this->ratePlace();
+        } elseif( $this->request === "getRating") {
+            return $this->getRating();
         }
         
         return parent::processPOST();
@@ -62,10 +64,18 @@ class PlaceAPI extends CoreAPI {
         $link = array_key_exists("link", $_POST) ? $_POST["link"] : null;
         $phone = array_key_exists("phone", $_POST) ? $_POST["phone"] : null;
         
+        $Username = $this->getUsername($_POST["auth"]);
+
+        if($Username["error"]){
+            return $Username;
+        }
+
         include_once("sqlHandler/dbconnector.php");
         $DB = new DBPDO();
         $DB->execute("INSERT INTO Places(Name,Short_des,Lat_coord,Long_coord,Long_des,Address,Image,Link,Phone) VALUES (?,?,?,?,?,?,?,?,?)", array($name,$short_desc,$lat,$long,$long_desc,$address,$imageURL,$link,$phone));
         
+        $DB->execute("UPDATE User_Stats SET Places_Added = Places_Added+1 WHERE Username = ?", array($Username));
+
         return $this->successPlaceAdded();
     }
 
@@ -211,8 +221,40 @@ class PlaceAPI extends CoreAPI {
         
         $DB->execute("UPDATE Places SET Av_Rating = (SELECT AVG(Rating) FROM Place_Ratings WHERE Place_ID = ?) WHERE ID = ?",array($place_id,$place_id));
         $result = $DB->fetch("SELECT ID, Av_Rating FROM Places WHERE ID = ?",array($place_id));
+
+        $DB->execute("UPDATE User_Stats SET Places_Rated = Places_Rated+1 WHERE Username = ?", array($username));
         
         return json_encode($result);
+    }
+
+    private function getRating(){
+
+        if (array_key_exists("place_id", $_POST)) {
+            $place_id = $_POST["place_id"];
+        } else {
+            return $this->error("Place ID parameter is required");
+        }
+        
+        if (array_key_exists("auth", $_POST)) {
+            $auth = $_POST["auth"];
+        } else {
+            return $this->error("Auth parameter is required");
+        }
+
+        include_once('sqlHandler/dbconnector.php');
+        $DB = new DBPDO();
+        $username = $DB->fetch("SELECT Username FROM Tokens WHERE Auth_token = ?",array($auth));
+        
+        if ($username === false) {
+            return $this->error("Cannot find user");
+        } else {
+            $username = $username["Username"];
+        }
+
+        $currentRating = $DB->fetch("SELECT * FROM Place_Ratings WHERE Username = ? AND Place_ID = ?",array($username,$place_id));
+
+        return json_encode($currentRating);
+
     }
     
     ## error responses

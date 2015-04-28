@@ -397,17 +397,25 @@ header {
       content: "\e9cb"; }
   #places .display-box .rating {
     border-top: 1px solid #e5e5e5; }
-    #places .display-box .rating p:first-of-type {
+  #places .display-box .submit-rating {
+    border-top: 1px solid #e5e5e5; }
+  #places .display-box .user-rating, #places .display-box .av-rating {
+    float: left;
+    width: calc(50% - 0.5rem); }
+    #places .display-box .user-rating > p, #places .display-box .av-rating > p {
+      font-size: 0.8rem;
+      color: #4d4d4d;
+      margin-left: 0.5rem; }
+    #places .display-box .user-rating div, #places .display-box .av-rating div {
+      margin: auto;
+      text-align: center; }
+    #places .display-box .user-rating span:first-of-type, #places .display-box .av-rating span:first-of-type {
       color: red;
-      font-size: 3rem;
-      padding-left: 1rem;
-      float: left; }
-    #places .display-box .rating p:nth-of-type(4n+2) {
-      position: relative;
-      top: 1.7rem;
+      font-size: 3rem; }
+    #places .display-box .user-rating span:nth-of-type(4n+2), #places .display-box .av-rating span:nth-of-type(4n+2) {
       font-size: 1.5rem; }
-    #places .display-box .rating p:last-of-type {
-      padding: 0.3rem 0 0 3.5rem; }
+  #places .display-box .user-rating {
+    border-left: 1px solid #e5e5e5; }
   #places .display-box .close {
     padding: 1rem 0; }
     #places .display-box .close button {
@@ -421,6 +429,18 @@ header {
       font-size: 1.3rem;
       margin: auto;
       outline: none; }
+#places .star {
+  display: block;
+  text-align: center;
+  margin: 1rem 0;
+  float: left;
+  width: 20%;
+  font-family: icomoon; }
+#places .star.selected {
+  color: yellow;
+  -webkit-text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7);
+  -moz-text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7);
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7); }
 
 /* 
  * This is the style sheet for the ###COME UP WITH AWESOME NAME header

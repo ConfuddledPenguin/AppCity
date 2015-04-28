@@ -54,3 +54,44 @@ CREATE TABLE Tokens (
   Expires    bigint NOT NULL, 
   PRIMARY KEY (Auth_token)
 );
+CREATE TABLE Guides (
+    ID         int(10) NOT NULL AUTO_INCREMENT,
+    Name       varchar(255) NOT NULL,
+    Short_des  blob NOT NULL,
+    Av_Rating  int(10) NOT NULL DEFAULT 0,
+    Lat_coord  FLOAT(10,6) NOT NULL,
+    Long_coord FLOAT(10,6) NOT NULL,
+    Image      varchar(2048),
+    PRIMARY KEY (ID)
+);
+CREATE TABLE Guides_Places (
+    Guide_ID    int(10) NOT NULL,
+    Place_ID    int(10) NOT NULL,
+    PRIMARY KEY (Guide_ID, Place_ID),
+    CONSTRAINT fk_Guides_Places_Guide
+        FOREIGN KEY (Guide_ID)
+        REFERENCES Guides (ID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_Guides_Places_Place
+        FOREIGN KEY (Place_ID)
+        REFERENCES Places (ID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+CREATE TABLE Guides_Ratings (
+    Username    varchar(255) NOT NULL,
+    Guide_ID    int(10) NOT NULL,
+    Rating      int(2) NOT NULL,
+    PRIMARY KEY (Username,Guide_ID),
+    CONSTRAINT fk_Guide_Ratings_Users
+        FOREIGN KEY (Username)
+        REFERENCES Users (Username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_Guide_Ratings_Guide
+        FOREIGN KEY (Guide_ID)
+        REFERENCES Guides (ID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
